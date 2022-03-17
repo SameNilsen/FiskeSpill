@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.CubicCurve?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+
+<VBox onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ProjectCanvas.CanvasController">
+   <children>
+      <HBox prefHeight="0.0" prefWidth="1477.0">
+         <children>
+            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" onAction="#handleButtonClick" text="Kalkuler" />
+            <Button mnemonicParsing="false" onAction="#handleFissButton" text="movfiss" />
+            <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+         </children>
+      </HBox>
+      <ScrollPane fx:id="background" onMousePressed="#moveScreen" onMouseReleased="#stopScreen" prefWidth="1477.0">
+         <content>
+            <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" onMouseMoved="#displayPosition" prefHeight="1000.0" prefWidth="1500.0">
+               <children>
+                  <Ellipse fx:id="boat" fill="#ba823e" layoutX="127.0" layoutY="85.0" onKeyPressed="#handleKeyPressed" radiusX="81.0" radiusY="23.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Line endX="473.0" endY="7.62939453125E-6" layoutX="127.0" layoutY="500.0" startX="-126.99999237060547" startY="7.62939453125E-6" stroke="#293edd" />
+                  <CubicCurve controlX1="-50.0" controlX2="50.83331298828125" controlY1="-100.0" controlY2="157.33331298828125" endX="150.0" fill="DODGERBLUE" layoutX="750.0" layoutY="500.0" startX="-150.0" stroke="BLACK" />
+                  <CubicCurve controlX1="-50.0" controlX2="50.0" controlY1="-100.0" controlY2="100.0" endX="440.5" endY="7.62939453125E-6" fill="DODGERBLUE" layoutX="1053.0" layoutY="500.0" startX="-150.0" stroke="BLACK" />
+                  <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="315.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../java/ProjectCanvas/boat2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>
