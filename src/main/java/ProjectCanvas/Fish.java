@@ -8,6 +8,20 @@ import javafx.scene.shape.Ellipse;
 
 public class Fish {
 
+    //  I denne klassen lages fiskene. I første utkast hadde jeg Ellipses istedet for Image som
+    //  fiskene (for å teste ut funksjonalitet). 
+    //  Denne linjen i konstruktøren:
+    //     this.fish = new Ellipse(pos_x, pos_y, size_x, size_y);
+    //  var da den opprinnelige "fisken", før den ble byttet ut med Image.
+
+    //  Forøvrig, ImageView er bilderammen mens Image er selve bildet. Bilde/Image må legges inni 
+    //  bilderammen/ImageView. Deretter er det bilderammen/ImageView som blir flyttet på og som får
+    //  en vinkel osv. 
+
+    //  Selve bevegelsen til en fisk er veldig primitiv inntil videre. Den får utdelt en vinkel når
+    //  den opprettes, og så følger den en lineær bane ut ifra den vinkelen. Senere bær vi legge på 
+    //  individuelle hastigheter, bilder til fiskene, bevegelser osv.
+
     double speed = 2;
     double size;
     double angle = 30;
@@ -21,6 +35,7 @@ public class Fish {
 
     public Fish(double pos_x, double pos_y, double size_x, double size_y) {
         this.fish = new Ellipse(pos_x, pos_y, size_x, size_y);
+
         imageView = new ImageView();
         this.fishImage = new Image(getClass().getResourceAsStream("fish1.png"));
         imageView.setImage(fishImage);
