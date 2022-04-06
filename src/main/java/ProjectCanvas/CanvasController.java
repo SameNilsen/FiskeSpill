@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
+import javafx.beans.binding.DoubleExpression;
 import javafx.fxml.FXML;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.canvas.Canvas;
@@ -206,6 +207,11 @@ public class CanvasController implements Initializable {
         public void handle(long currentNanoTime)
         {  
             //  BEREGN AVSTAND
+            double boat_x = image.getX()+520;
+            double boat_y = 410;
+            dupp.setCenterX(dupp.getCenterX() - Math.abs((boat_x-dupp.getCenterX()))/100);
+            dupp.setCenterY(dupp.getCenterY() - Math.abs((boat_y-dupp.getCenterY()))/100);
+            System.out.println(image.getX()+520);
         }
     };
 
