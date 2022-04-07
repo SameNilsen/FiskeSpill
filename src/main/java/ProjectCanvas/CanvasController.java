@@ -5,32 +5,34 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
-import javafx.beans.binding.DoubleExpression;
+// import javafx.beans.binding.DoubleExpression;
 import javafx.fxml.FXML;
 import javafx.scene.PerspectiveCamera;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+// import javafx.scene.canvas.Canvas;
+// import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
+// import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+// import javafx.scene.effect.Light.Point;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Pane;
+// import javafx.scene.layout.Background;
+// import javafx.scene.layout.Pane;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+// import javafx.scene.paint.Color;
+// import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
+// import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 
 //        Denne klassen skal være kontrolleren til spillet og skal egentlig inneholde minst mulig logikk
 //        og mest mulig f.eks " fish.getFish().setRotate(fish.getAngle()); " der man skal sette 
@@ -53,8 +55,8 @@ public class CanvasController implements Initializable {
     @FXML
     private Label result;
 
-    @FXML
-    private Ellipse boat;
+    // @FXML
+    // private Ellipse boat;
 
     @FXML
     ScrollPane background;
@@ -69,13 +71,13 @@ public class CanvasController implements Initializable {
     private ImageView image;
 
     @FXML
-    private ImageView imageViewRod;
+    private ImageView imageViewRod = new ImageView();;
 
     @FXML
     Image boatImage = new Image(getClass().getResourceAsStream("boat2.png"));
 
+    private Image fishinRodImage = new Image(getClass().getResourceAsStream("fishingRod.png"));
     private FishMain main;
-
     private AnimationTimer timer2;
 
     private AnimationTimer timer3;
@@ -90,10 +92,12 @@ public class CanvasController implements Initializable {
 
     private Ellipse dupp;
 
+    private Boat boat;
+
     int x1 = 0;
     private int y1 = 0;
 
-    private void initMain(double mus_x, double mus_y) {
+    private void initMain(Point2D mousePos) {
         main = new FishMain();
     }
 
@@ -102,18 +106,20 @@ public class CanvasController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("gallaea");
-
         //  Båt
-        image.setImage(boatImage);
-        image.setY(10);
+        this.boat = new Boat(new Point2D(0, 10), boatImage, image);
+        
+        // KOMMENTERT UT FOR TESTING
+        // image.setImage(boatImage);
+        // image.setY(10);
+        // 
         
         //  Setter start verdi for hvor langt ned skjermen skal være scrollet
         background.setVvalue(0.8);
 
         //  Fiskestang
-        imageViewRod = new ImageView();
-        Image fishinRodImage = new Image(getClass().getResourceAsStream("fishingRod.png"));
+        // imageViewRod = 
+        
         imageViewRod.setImage(fishinRodImage);
         anchorPane.getChildren().add(imageViewRod);
         imageViewRod.setPreserveRatio(true);
@@ -176,27 +182,60 @@ public class CanvasController implements Initializable {
     //  Dette er en timer for båten. Det er ikke strengt tatt nødvendig å legge båtens bevegelse i en
     //  timer, men jaja. Ettersom båten beveger seg må også både fiskestangen og skjermen bevege seg like
     //  mye.
+
+    // Kommentert ut for å teste ting. Du kan uncommente det når du koder.
+    
+    // AnimationTimer timerBoat = new AnimationTimer()
+    // {
+    //     public void handle(long currentNanoTime)
+    //     {   
+    //         if (boatDir == "right"){
+    //             image.setX(image.getX()+5);
+    //             imageViewRod.setX(imageViewRod.getX()+5);
+    //             dupp.setCenterX(dupp.getCenterX()+5);
+    //             if (image.localToScene(image.getBoundsInLocal()).getMaxX() > 500){
+    //                 background.setHvalue(background.getHvalue()+0.005);
+    //                 // background.setHvalue((image.getX())/1000);
+    //             }
+    //         }
+    //         if (boatDir == "left"){
+    //             image.setX(image.getX()-5);
+    //             imageViewRod.setX(imageViewRod.getX()-5);
+    //             if (image.localToScene(image.getBoundsInLocal()).getMinX() < 100){
+    //                 // background.setHvalue((image.getX()+350)/1500);
+    //                 background.setHvalue(background.getHvalue()-0.005);
+    //             }
+    //         }
+    //     }
+    // };
+
     AnimationTimer timerBoat = new AnimationTimer()
     {
         public void handle(long currentNanoTime)
         {   
-            if (boatDir == "right"){
-                image.setX(image.getX()+5);
-                imageViewRod.setX(imageViewRod.getX()+5);
-                dupp.setCenterX(dupp.getCenterX()+5);
+            if (boat.direction == true){
+                boat.moveBoat(new Point2D(boat.getX()+5, boat.getY()));
+                // imageViewRod.setX(imageViewRod.getX()+5);
+                // dupp.setCenterX(dupp.getCenterX()+5);
                 if (image.localToScene(image.getBoundsInLocal()).getMaxX() > 500){
                     background.setHvalue(background.getHvalue()+0.005);
                     // background.setHvalue((image.getX())/1000);
                 }
             }
-            if (boatDir == "left"){
-                image.setX(image.getX()-5);
-                imageViewRod.setX(imageViewRod.getX()-5);
+            else {
+                boat.moveBoat(new Point2D(boat.getX()-5, boat.getY()));
                 if (image.localToScene(image.getBoundsInLocal()).getMinX() < 100){
-                    // background.setHvalue((image.getX()+350)/1500);
                     background.setHvalue(background.getHvalue()-0.005);
                 }
             }
+            // if (boatDir == "left"){
+            //     image.setX(image.getX()-5);
+            //     imageViewRod.setX(imageViewRod.getX()-5);
+            //     if (image.localToScene(image.getBoundsInLocal()).getMinX() < 100){
+            //         // background.setHvalue((image.getX()+350)/1500);
+            //         background.setHvalue(background.getHvalue()-0.005);
+            //     }
+            // }
         }
     };
 
@@ -227,22 +266,28 @@ public class CanvasController implements Initializable {
         stage.getScene().setCamera(camera);
 
         background.setOnKeyPressed((KeyEvent e) -> {
-            System.out.println(image.localToScene(image.getBoundsInLocal()).getMinX());
+            // System.out.println(image.localToScene(image.getBoundsInLocal()).getMinX());
             if (e.getCode() == KeyCode.D){
-                
+                // this.boat.moveBoat(new Point2D(this.boat.getX()+5, this.boat.getY()));
                 // Flytter båt, fiskestang, dupp til høyre.
-
-                System.out.println((image.getX()+500) + " " + background.getHvalue());
-                boatDir = "right";
+                
+                // KOMMENTERT UT FOR TESTING
+                // System.out.println((image.getX()+500) + " " + background.getHvalue());
+                // boatDir = "right";
+                boat.direction = true;
+                // boat.image.setScaleX(1);
                 timerBoat.start();
+                // image.setScaleX(1);
+                // imageViewRod.setX(image.getX()+450);
+                // imageViewRod.setScaleX(1);
+                //
+
 
                 // dupp.setCenterX(dupp.getCenterX()+10);
                 // image.setX(image.getX()+1);
-                image.setScaleX(1);
+              
                 
-                imageViewRod.setX(image.getX()+450);
                 // imageViewRod.setX(imageViewRod.getX()+10);
-                imageViewRod.setScaleX(1);
 
                 //  Flytter skjermen (alt lagt til i timerBoat istedet).
 
@@ -254,21 +299,26 @@ public class CanvasController implements Initializable {
                 // // background.setHvalue((image.getX()+500)/1500);
                 // camera.setLayoutX(boat.getCenterX());
             }
-            if (e.getCode() == KeyCode.A){
-                
-                //  Flytter båt, fiskestang, dupp til venstre.
-
-                System.out.println((image.getX()+250) + " " + background.getHvalue());
-                boatDir = "left";
+            else if (e.getCode() == KeyCode.A){
+                boat.direction = false;
+                // boat.image.setScaleX(-1);
                 timerBoat.start();
+                //  Flytter båt, fiskestang, dupp til venstre.
+                // KOMMENTERT UT FOR TESTING
+                // System.out.println((image.getX()+250) + " " + background.getHvalue());
+                // boatDir = "left";
+                // timerBoat.start();
+                // image.setScaleX(-1);
+                // imageViewRod.setX(image.getX()+290);
+                // imageViewRod.setScaleX(-1);
+                //
+
+
 
                 // dupp.setCenterX(dupp.getCenterX()-10);
                 // image.setX(image.getX()-10);
-                image.setScaleX(-1);
                 
-                imageViewRod.setX(image.getX()+290);
                 // imageViewRod.setX(imageViewRod.getX()-10);
-                imageViewRod.setScaleX(-1);
                 
                 //  Flytter skjermen (alt lagt til i timerBoat istedet).
 
@@ -277,15 +327,15 @@ public class CanvasController implements Initializable {
                 // }
                 // camera.setLayoutX(boat.getCenterX());
             }
-
             //  Når man trykker R roteres fiskestangen bakover.
             if (e.getCode() == KeyCode.R){
-                if (boatDir == "left"){
-                    imageViewRod.setRotate(imageViewRod.getRotate()+1);
-                }
-                else{
-                    imageViewRod.setRotate(imageViewRod.getRotate()-1);
-                }
+                // KOMMENTERT UT FOR TESTING
+                // if (boatDir == "left"){
+                //     imageViewRod.setRotate(imageViewRod.getRotate()+1);
+                // }
+                // else{
+                //     imageViewRod.setRotate(imageViewRod.getRotate()-1);
+                // }
             }
 
             //  Dette er en hjelpeknapp som printer ut ulike ting som kan brukes til debugging.
@@ -305,10 +355,10 @@ public class CanvasController implements Initializable {
         });
 
         //  Funker ikke / brukes ikke / ignorer.
-        if (keyEvent.getCode() == KeyCode.RIGHT) {
-            System.out.println(1212);
-            boat.setLayoutX(boat.getCenterX()+100);
-        }
+        // if (keyEvent.getCode() == KeyCode.RIGHT) {
+        //     System.out.println(1212);
+        //     // boat.setLayoutX(boat.getCenterX()+100);
+        // }
         // anchorPane.setOnKeyPressed((KeyEvent e) -> {
         //     System.out.println("asd"+anchorPane.getChildren().));
         // });
@@ -327,7 +377,8 @@ public class CanvasController implements Initializable {
             timerBoat.stop();
         }
         if (keyEvent.getCode() == KeyCode.F){
-            timerReelInn.stop();
+            // KOMMENTERT UT FOR TESTING
+            // timerReelInn.stop();
         }
     }
 
@@ -353,7 +404,8 @@ public class CanvasController implements Initializable {
         background.setVbarPolicy(ScrollBarPolicy.NEVER);
         background.setHvalue(0.01);
         for (int i = 0; i < 11; i++) {
-            Fish fish2 = new Fish(100+i*2,170 + i*50, 30, 10);
+
+            Fish fish2 = new Fish(new Point2D(100+i*2,170 + i*50), new Point2D(30, 10));
             fishes.add(fish2);
             anchorPane.getChildren().add(fish2.getFish());   
         }
@@ -376,7 +428,7 @@ public class CanvasController implements Initializable {
                     // System.out.println("gammel Y: "+fish.getPosY());
                     // System.out.println("X: "+fish.calculateNextX());
                     // System.out.println("Y: "+fish.calculateNextY());
-                    fish.setPos(fish.getPosX()+fish.calculateNextX(), fish.getPosY()+fish.calculateNextY());
+                    fish.setPos(new Point2D(fish.getPosX()+fish.calculateNextX(), fish.getPosY()+fish.calculateNextY()));
                     fish.getFish().setRotate(fish.getAngle());   
                     // System.out.println(fish.getAngle());
                     // System.out.println("Ny X: "+fish.getPosX());
@@ -401,7 +453,7 @@ public class CanvasController implements Initializable {
     //  når man trykker med musa. 
     @FXML
     private void moveScreen(MouseEvent e) {
-        initMain(e.getX(), e.getY());
+        initMain(new Point2D(e.getX(), e.getY()));
         timer2 = new AnimationTimer()
         {
             public void handle(long currentNanoTime)

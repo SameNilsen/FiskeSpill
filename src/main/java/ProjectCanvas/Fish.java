@@ -1,10 +1,14 @@
 package ProjectCanvas;
 
+import java.io.Console;
 import java.util.Random;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Ellipse;
+
+
 
 public class Fish {
 
@@ -22,31 +26,34 @@ public class Fish {
     //  den opprettes, og så følger den en lineær bane ut ifra den vinkelen. Senere bær vi legge på 
     //  individuelle hastigheter, bilder til fiskene, bevegelser osv.
 
-    double speed = 2;
-    double size;
-    double angle = 30;
-    double endring_x;
-    double endring_y;
-    Ellipse fish;
-    private ImageView imageView;
-    Image fishImage;
-
+    private double speed = 2;
+    // private double size;
+    private double endring_x;
+    private double endring_y;
+    // private Ellipse fish;
+    private ImageView imageView = new ImageView();
+    // private Image fishImage;
+    private int timeTillSwitch;
+    
     Random rand = new Random();
+    private double angle = rand.nextInt(360);
 
-    public Fish(double pos_x, double pos_y, double size_x, double size_y) {
-        this.fish = new Ellipse(pos_x, pos_y, size_x, size_y);
+    public Fish(Point2D pos, Point2D size) {
+        // this.fish = new Ellipse(pos.getX(), pos.getY(), size.getX(), size.getY());
+        double posX = pos.getX();
+        double posY = pos.getY();
 
-        imageView = new ImageView();
-        this.fishImage = new Image(getClass().getResourceAsStream("fish1.png"));
-        imageView.setImage(fishImage);
+        imageView.setImage(new Image(getClass().getResourceAsStream("fish1.png")));
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(50);
         imageView.setFitWidth(50);
-        imageView.setY(pos_y);
-        imageView.setX(pos_x);
-        int n = rand.nextInt(360);
-        this.angle = n;
+        imageView.setY(posY);
+        imageView.setX(posX);
+
+
+    
     }
+
 
     public ImageView getFish() {
         // return this.fish;
@@ -92,10 +99,10 @@ public class Fish {
         return endring_y;
     }
 
-    public void setPos(double pos_x, double pos_y) {
+    public void setPos(Point2D pos) {
         // fish.setCenterX(pos_x);
         // fish.setCenterY(pos_y);
-        this.imageView.setX(pos_x);
-        this.imageView.setY(pos_y);
+        this.imageView.setX(pos.getX());
+        this.imageView.setY(pos.getY());
     }
 }
