@@ -91,7 +91,7 @@ public class Fish {
     }
 
     public double calculateNextY() {
-        if (this.getPosY() > 600 || this.getPosY() < 120){
+        if (this.getPosY() > 1000 || this.getPosY() < 500){
             this.angle = 360 - this.getAngle();
             //System.out.println("angleChange: " +this.getAngle());
         }

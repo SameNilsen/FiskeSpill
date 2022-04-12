@@ -71,7 +71,7 @@ public class CanvasController implements Initializable {
     private ImageView image;
 
     @FXML
-    private ImageView imageViewRod = new ImageView();;
+    private ImageView imageViewRod = new ImageView();
 
     @FXML
     Image boatImage = new Image(getClass().getResourceAsStream("boat2.png"));
@@ -90,9 +90,13 @@ public class CanvasController implements Initializable {
 
     private long startTime;
 
-    private Ellipse dupp;
+    private Ellipse duppen;
 
     private Boat boat;
+
+    private FishingRod fishingrod;
+
+    private Dupp dupp;
 
     int x1 = 0;
     private int y1 = 0;
@@ -108,6 +112,13 @@ public class CanvasController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //  Båt
         this.boat = new Boat(new Point2D(0, 10), boatImage, image);
+
+        this.fishingrod = new FishingRod(new Point2D(410, 435), fishinRodImage, imageViewRod);
+        anchorPane.getChildren().add(imageViewRod);
+
+        this.dupp = new Dupp(new Point2D(525, 20));
+        
+        // dupp = new Ellipse(525, 20, 5, 5);
         
         // KOMMENTERT UT FOR TESTING
         // image.setImage(boatImage);
@@ -120,16 +131,15 @@ public class CanvasController implements Initializable {
         //  Fiskestang
         // imageViewRod = 
         
-        imageViewRod.setImage(fishinRodImage);
-        anchorPane.getChildren().add(imageViewRod);
-        imageViewRod.setPreserveRatio(true);
-        imageViewRod.setFitHeight(75);
-        imageViewRod.setFitWidth(75);
-        imageViewRod.setY(410);
-        imageViewRod.setX(435);
+        // imageViewRod.setImage(fishinRodImage);
+        // anchorPane.getChildren().add(imageViewRod);
+        // imageViewRod.setPreserveRatio(true);
+        // imageViewRod.setFitHeight(75);
+        // imageViewRod.setFitWidth(75);
+        // imageViewRod.setY(410);
+        // imageViewRod.setX(435);
         System.out.println(System.nanoTime());
 
-        dupp = new Ellipse(525, 20, 5, 5);
 
         //  En foreløpig ubrukt timer.
         //  En slik timer er forøvrig en type bakgrunnsprosess som gjør det mulig at flere ting skjer samtidig.
@@ -140,7 +150,7 @@ public class CanvasController implements Initializable {
                 // status.setY(value);
             }
         };
-        timer3.start();
+        // timer3.start();
     }
 
     //  Dette er en timer som startes idet duppen forlater fiskestangen. Duppen følger en slags krumlinjet
@@ -152,22 +162,32 @@ public class CanvasController implements Initializable {
         {
             public void handle(long currentNanoTime)
             {   
-                if (dupp.getCenterY() < anchorPane.getHeight()-100){
+                if (dupp.getY() < anchorPane.getHeight()-100){
                     double time = (currentNanoTime-startTime)*Math.pow(10, -9)*6;
                     //System.out.println((currentNanoTime-startTime)*Math.pow(10, -9));
                     // System.out.println(dupp.localToScene(dupp.getBoundsInLocal()).getMaxX());
-                    dupp.setCenterX(image.getX()+545+(50 * Math.cos(Math.toRadians(30)) * time));
-                    dupp.setCenterY(410+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1);
-                    System.out.println(dupp.getCenterY());
-                    if (dupp.localToScene(dupp.getBoundsInLocal()).getMaxX() > 500){
+                    if (boat.direction){
+                        dupp.moveDupp(new Point2D(image.getX()+545+(50 * Math.cos(Math.toRadians(30)) * time), 410+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1));
+                    }
+                    else{
+                        dupp.moveDupp(new Point2D(image.getX()+290+(50 * Math.cos(Math.toRadians(30)) * time * -1), 410+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1));
+                    }
+                    // dupp.setCenterX(image.getX()+545+(50 * Math.cos(Math.toRadians(30)) * time));
+                    // dupp.setCenterY(410+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1);
+                    // System.out.println(dupp.getCenterY());
+                    if (dupp.getEllipse().localToScene(dupp.getEllipse().getBoundsInLocal()).getMaxX() > 500){
                         // background.setHvalue((dupp.getCenterX()-400)/1500);
                         background.setHvalue(background.getHvalue()+0.004);
                     }
-                    if (dupp.localToScene(dupp.getBoundsInLocal()).getMaxY() < 80){
+                    if (dupp.getEllipse().localToScene(dupp.getEllipse().getBoundsInLocal()).getMaxX() < 100){
+                        // background.setHvalue((dupp.getCenterX()-400)/1500);
+                        background.setHvalue(background.getHvalue()-0.004);
+                    }
+                    if (dupp.getEllipse().localToScene(dupp.getEllipse().getBoundsInLocal()).getMaxY() < 80){
                         // background.setHvalue((dupp.getCenterX()-400)/1500);
                         background.setVvalue(background.getVvalue()-0.004);
                     }
-                    if (dupp.localToScene(dupp.getBoundsInLocal()).getMaxY() > 400){
+                    if (dupp.getEllipse().localToScene(dupp.getEllipse().getBoundsInLocal()).getMaxY() > 400){
                         // background.setHvalue((dupp.getCenterX()-400)/1500);
                         background.setVvalue(background.getVvalue()+0.007);
                     }
@@ -215,6 +235,8 @@ public class CanvasController implements Initializable {
         {   
             if (boat.direction == true){
                 boat.moveBoat(new Point2D(boat.getX()+5, boat.getY()));
+                fishingrod.moveRod(new Point2D(fishingrod.getX()+5, fishingrod.getY()));
+                dupp.moveDupp(new Point2D(dupp.getX()+5, dupp.getY()));
                 // imageViewRod.setX(imageViewRod.getX()+5);
                 // dupp.setCenterX(dupp.getCenterX()+5);
                 if (image.localToScene(image.getBoundsInLocal()).getMaxX() > 500){
@@ -224,6 +246,8 @@ public class CanvasController implements Initializable {
             }
             else {
                 boat.moveBoat(new Point2D(boat.getX()-5, boat.getY()));
+                fishingrod.moveRod(new Point2D(fishingrod.getX()-5, fishingrod.getY()));
+                dupp.moveDupp(new Point2D(dupp.getX()-5, dupp.getY()));
                 if (image.localToScene(image.getBoundsInLocal()).getMinX() < 100){
                     background.setHvalue(background.getHvalue()-0.005);
                 }
@@ -246,11 +270,19 @@ public class CanvasController implements Initializable {
         public void handle(long currentNanoTime)
         {  
             //  BEREGN AVSTAND
-            double boat_x = image.getX()+520;
-            double boat_y = 410;
-            dupp.setCenterX(dupp.getCenterX() - Math.abs((boat_x-dupp.getCenterX()))/100);
-            dupp.setCenterY(dupp.getCenterY() - Math.abs((boat_y-dupp.getCenterY()))/100);
+            double dest_x = fishingrod.getX()+35;
+            double dest_y = (fishingrod.getY()-25);
+            dupp.moveDupp(new Point2D(dupp.getX() + (dest_x-dupp.getX())/100, dupp.getY() - Math.abs((dest_y-dupp.getY()))/100));
+            // dupp.setCenterX(dupp.getCenterX() + (boat_x-dupp.getCenterX())/100);
+            // dupp.setCenterY(dupp.getCenterY() - Math.abs((boat_y-dupp.getCenterY()))/100);
             System.out.println(image.getX()+520);
+            if ((Math.abs(dupp.getX()-dest_x) <= 50) && (Math.abs(dupp.getY()-dest_y) <= 50)){
+                anchorPane.getChildren().remove(dupp.getEllipse());
+                dupp.moveDupp(new Point2D(dest_x, dest_y));
+                // dupp.setCenterX(boat_x);
+                // dupp.setCenterY(boat_y);
+                // anchorPane.getChildren().add(dupp.getEllipse());
+            }
         }
     };
 
@@ -276,6 +308,7 @@ public class CanvasController implements Initializable {
                 // boatDir = "right";
                 boat.direction = true;
                 // boat.image.setScaleX(1);
+                fishingrod.moveRod(new Point2D(boat.getX()+490, fishingrod.getY()));
                 timerBoat.start();
                 // image.setScaleX(1);
                 // imageViewRod.setX(image.getX()+450);
@@ -302,6 +335,7 @@ public class CanvasController implements Initializable {
             else if (e.getCode() == KeyCode.A){
                 boat.direction = false;
                 // boat.image.setScaleX(-1);
+                fishingrod.moveRod(new Point2D(boat.getX()+290, fishingrod.getY()));
                 timerBoat.start();
                 //  Flytter båt, fiskestang, dupp til venstre.
                 // KOMMENTERT UT FOR TESTING
@@ -329,25 +363,25 @@ public class CanvasController implements Initializable {
             }
             //  Når man trykker R roteres fiskestangen bakover.
             if (e.getCode() == KeyCode.R){
-                // KOMMENTERT UT FOR TESTING
-                // if (boatDir == "left"){
-                //     imageViewRod.setRotate(imageViewRod.getRotate()+1);
-                // }
-                // else{
-                //     imageViewRod.setRotate(imageViewRod.getRotate()-1);
-                // }
+                System.out.println(boat.direction);
+                if (boat.direction){
+                    imageViewRod.setRotate(imageViewRod.getRotate()-1);
+                }
+                else{
+                    imageViewRod.setRotate(imageViewRod.getRotate()+1);
+                }
             }
 
             //  Dette er en hjelpeknapp som printer ut ulike ting som kan brukes til debugging.
             if (e.getCode() == KeyCode.I){
-                System.out.println(dupp.localToScene(dupp.getBoundsInLocal()).getMaxY());
-                System.out.println(background.getHvalue());
-                System.out.println(image.getX());
-                System.out.println(anchorPane.getWidth());
-                System.out.println(anchorPane.getHeight());
+                // System.out.println(dupp.localToScene(dupp.getBoundsInLocal()).getMaxY());
+                System.out.println("BoatX: "+boat.getX());
+                System.out.println("BoatY: "+boat.getY());
+                System.out.println("RodX: "+fishingrod.getX());
+                System.out.println("RodY: "+fishingrod.getY());
             }
-
-            //  Man sveiver inn duppen med denne knappen. Har enda ikke noe virkning.
+            
+            //  Man sveiver inn duppen med denne knappen. 
             if (e.getCode() == KeyCode.F){
                 timerReelInn.start();
             }
@@ -368,7 +402,7 @@ public class CanvasController implements Initializable {
     @FXML
     private void handleKeyReleased(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.R){
-            anchorPane.getChildren().add(dupp);
+            anchorPane.getChildren().add(dupp.getEllipse());
             imageViewRod.setRotate(0);
             startTime = System.nanoTime();
             timerDupp.start();
@@ -377,8 +411,7 @@ public class CanvasController implements Initializable {
             timerBoat.stop();
         }
         if (keyEvent.getCode() == KeyCode.F){
-            // KOMMENTERT UT FOR TESTING
-            // timerReelInn.stop();
+            timerReelInn.stop();
         }
     }
 
@@ -403,9 +436,9 @@ public class CanvasController implements Initializable {
         background.setHbarPolicy(ScrollBarPolicy.NEVER);
         background.setVbarPolicy(ScrollBarPolicy.NEVER);
         background.setHvalue(0.01);
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 10; i++) {
 
-            Fish fish2 = new Fish(new Point2D(100+i*2,170 + i*50), new Point2D(30, 10));
+            Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
             fishes.add(fish2);
             anchorPane.getChildren().add(fish2.getFish());   
         }
@@ -443,7 +476,7 @@ public class CanvasController implements Initializable {
     //  Viser x og y posisjon til musa når man beveger den.
     @FXML
     private void displayPosition(MouseEvent e) {
-        status.setText("X = "+Math.round(e.getX())+" Y = "+Math.round(e.getY()) + ", viewport: " + dupp.localToScene(dupp.getBoundsInLocal()).getMaxY());
+        status.setText("X = "+Math.round(e.getX())+" Y = "+Math.round(e.getY()) + ", viewport: " + dupp.getEllipse().localToScene(dupp.getEllipse().getBoundsInLocal()).getMaxY());
         // background.setHvalue((e.getX())/1500);
     }
 
