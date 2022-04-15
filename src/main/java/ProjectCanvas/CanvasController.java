@@ -34,13 +34,9 @@ import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 
-//        Denne klassen skal være kontrolleren til spillet og skal egentlig inneholde minst mulig logikk
-//        og mest mulig f.eks " fish.getFish().setRotate(fish.getAngle()); " der man skal sette 
-//        vinkelen på fisken, mens selve utregningen av hva vinkelen skal være burde gjøres i en 
-//        annen klasse f.eks Fish.java. 
-//        Må ryddes...
-//        Det er masse print greier rundt omkring, men det er bare for debugging, alt det skal fjernes 
-//        til slutt.
+import static ProjectCanvas.Constants.RIGHT_KEY;
+import static ProjectCanvas.Constants.LEFT_KEY;
+
 
 //        Tastene:
 //        Bevege båten AWSD
@@ -267,7 +263,7 @@ public class CanvasController implements Initializable {
 
         background.setOnKeyPressed((KeyEvent e) -> {
             // System.out.println(image.localToScene(image.getBoundsInLocal()).getMinX());
-            if (e.getCode() == KeyCode.D){
+            if (e.getCode() == RIGHT_KEY){
                 // this.boat.moveBoat(new Point2D(this.boat.getX()+5, this.boat.getY()));
                 // Flytter båt, fiskestang, dupp til høyre.
                 
@@ -299,7 +295,7 @@ public class CanvasController implements Initializable {
                 // // background.setHvalue((image.getX()+500)/1500);
                 // camera.setLayoutX(boat.getCenterX());
             }
-            else if (e.getCode() == KeyCode.A){
+            else if (e.getCode() == LEFT_KEY){
                 boat.direction = false;
                 // boat.image.setScaleX(-1);
                 timerBoat.start();
