@@ -8,6 +8,8 @@ import javafx.animation.AnimationTimer;
 // import javafx.beans.binding.DoubleExpression;
 import javafx.fxml.FXML;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 // import javafx.scene.canvas.Canvas;
 // import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -24,7 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 // import javafx.scene.layout.Background;
 // import javafx.scene.layout.Pane;
-
+import javafx.scene.layout.StackPane;
 // import javafx.scene.paint.Color;
 // import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
@@ -59,13 +61,16 @@ public class CanvasController implements Initializable {
     private Label result;
 
     // @FXML
-    // private Ellipse boat;
+    // private Ellipse bat;
 
     @FXML
     ScrollPane background;
 
     @FXML
     AnchorPane anchorPane;
+
+    @FXML
+    AnchorPane displayFisses;
 
     @FXML
     private Text status;
@@ -89,6 +94,8 @@ public class CanvasController implements Initializable {
 
     ArrayList<Fish> fishes = new ArrayList<Fish>();
 
+    ArrayList<Fish> caughtFishesList = new ArrayList<Fish>();
+
     private String boatDir = "right";
 
     private long startTime;
@@ -109,6 +116,16 @@ public class CanvasController implements Initializable {
 
     private Line line;
 
+    private double dest_x;
+    private double dest_y; 
+
+    private Fish caughtFiss = null;
+
+    AnchorPane displayFishPane;
+
+    Stage stage;
+    Scene primaryScene;
+
     private void initMain(Point2D mousePos) {
         main = new FishMain();
     }
@@ -127,6 +144,8 @@ public class CanvasController implements Initializable {
         this.dupp = new Dupp(new Point2D(525, 20));
         
         // dupp = new Ellipse(525, 20, 5, 5);
+
+        line = new Line(fishingrod.getX()+35, fishingrod.getY()-25, dupp.getX(), dupp.getY());
         
         // KOMMENTERT UT FOR TESTING
         // image.setImage(boatImage);
@@ -135,6 +154,16 @@ public class CanvasController implements Initializable {
         
         //  Setter start verdi for hvor langt ned skjermen skal være scrollet
         background.setVvalue(0.8);
+
+        displayFishPane = new AnchorPane();
+        displayFishPane.setLayoutX(displayFishPane.sceneToLocal(100, 100).getX());
+        displayFishPane.setLayoutY(displayFishPane.sceneToLocal(100, 100).getY());
+
+        background.setHbarPolicy(ScrollBarPolicy.NEVER);
+        background.setVbarPolicy(ScrollBarPolicy.NEVER);
+
+        // stage = (Stage) anchorPane.getScene().getWindow();
+        // primaryScene = stage.getScene();
 
         //  Fiskestang
         // imageViewRod = 
@@ -169,7 +198,8 @@ public class CanvasController implements Initializable {
     AnimationTimer timerDupp = new AnimationTimer()
         {
             public void handle(long currentNanoTime)
-            {   if (duppMove){
+            {   
+                if (duppMove){
                     if (dupp.getY() < anchorPane.getHeight()-100){
                         double time = (currentNanoTime-startTime)*Math.pow(10, -9)*6;
                         //System.out.println((currentNanoTime-startTime)*Math.pow(10, -9));
@@ -208,14 +238,23 @@ public class CanvasController implements Initializable {
                 }
                 else{
                     if (dupp.getY() < anchorPane.getHeight()-100){
-                        System.out.println(222);
                         dupp.moveDupp(new Point2D(dupp.getX(), dupp.getY()+1));
                     }
                 }
-                line.setStartX(fishingrod.getX());
-                line.setStartY(fishingrod.getY());
+                if (boat.direction){
+                    line.setStartX(fishingrod.getX()+80);
+                    line.setStartY(fishingrod.getY()-25);
+                }
+                else{
+                    line.setStartX(fishingrod.getX());
+                    line.setStartY(fishingrod.getY()-25);
+                }
                 line.setEndX(dupp.getX());
                 line.setEndY(dupp.getY());
+
+                if (caughtFiss != null){
+                    caughtFiss.setPos(new Point2D(dupp.getX(), dupp.getY()));
+                }
             }
         };
 
@@ -290,24 +329,46 @@ public class CanvasController implements Initializable {
         public void handle(long currentNanoTime)
         {  
             //  BEREGN AVSTAND
-            double dest_x = fishingrod.getX()+35;
-            double dest_y = (fishingrod.getY()-25);
+            if (boat.direction){
+                dest_x = fishingrod.getX()+80;
+                dest_y = (fishingrod.getY()-25);
+            }
+            else{
+                dest_x = fishingrod.getX();
+                dest_y = (fishingrod.getY()-25);
+            }
             dupp.moveDupp(new Point2D(dupp.getX() + (dest_x-dupp.getX())/100, dupp.getY() - Math.abs((dest_y-dupp.getY()))/100));
             // dupp.setCenterX(dupp.getCenterX() + (boat_x-dupp.getCenterX())/100);
             // dupp.setCenterY(dupp.getCenterY() - Math.abs((boat_y-dupp.getCenterY()))/100);
-            System.out.println(image.getX()+520);
-            if ((Math.abs(dupp.getX()-dest_x) <= 50) && (Math.abs(dupp.getY()-dest_y) <= 50)){
+
+            if (caughtFiss != null){
+                caughtFiss.setPos(new Point2D(dupp.getX(), dupp.getY()));
+            }
+
+            if ((Math.abs(dupp.getX()-dest_x) <= 50) && (Math.abs(dupp.getY()-dest_y) <= 50) && caughtFiss != null){
                 anchorPane.getChildren().remove(dupp.getEllipse());
                 dupp.moveDupp(new Point2D(dest_x, dest_y));
                 timerDupp.stop();
                 duppMove = true;
                 duppTimerstat = false;
+                anchorPane.getChildren().remove(line);
+                caughtFiss.setPos(new Point2D(10, 10));
+                caughtFishesList.add(caughtFiss);
+                displayFisses.getChildren().add(caughtFiss.getFish());
+                caughtFiss = null;
+                
                 // dupp.setCenterX(boat_x);
                 // dupp.setCenterY(boat_y);
                 // anchorPane.getChildren().add(dupp.getEllipse());
             }
-            line.setStartX(fishingrod.getX());
-            line.setStartY(fishingrod.getY());
+            if (boat.direction){
+                line.setStartX(fishingrod.getX()+80);
+                line.setStartY(fishingrod.getY()-25);
+            }
+            else{
+                line.setStartX(fishingrod.getX());
+                line.setStartY(fishingrod.getY()-25);
+            }
             line.setEndX(dupp.getX());
             line.setEndY(dupp.getY());
         }
@@ -320,9 +381,9 @@ public class CanvasController implements Initializable {
     @FXML
     private void handleKeyPressed(KeyEvent keyEvent) {
         //  Ignorer de første tre linjene. Skulle teste noe. Det funket ikke.
-        Stage stage = (Stage) background.getScene().getWindow();
-        PerspectiveCamera camera = new PerspectiveCamera();
-        stage.getScene().setCamera(camera);
+        // Stage stage = (Stage) background.getScene().getWindow();
+        // PerspectiveCamera camera = new PerspectiveCamera();
+        // stage.getScene().setCamera(camera);
 
         background.setOnKeyPressed((KeyEvent e) -> {
             // System.out.println(image.localToScene(image.getBoundsInLocal()).getMinX());
@@ -390,7 +451,6 @@ public class CanvasController implements Initializable {
             }
             //  Når man trykker R roteres fiskestangen bakover.
             if (e.getCode() == KeyCode.R){
-                System.out.println(boat.direction);
                 if (boat.direction){
                     imageViewRod.setRotate(imageViewRod.getRotate()-1);
                 }
@@ -406,6 +466,11 @@ public class CanvasController implements Initializable {
                 System.out.println("BoatY: "+boat.getY());
                 System.out.println("RodX: "+fishingrod.getX());
                 System.out.println("RodY: "+fishingrod.getY());
+                System.out.println(displayFishPane.localToScene(displayFishPane.getBoundsInLocal()).getMinY());
+                System.out.println(anchorPane.getBoundsInLocal());
+                System.out.println(anchorPane.getBoundsInParent());
+                System.out.println(anchorPane.parentToLocal(background.getParent().getLayoutX(), 0));
+                stage.setScene(primaryScene);
             }
             
             //  Man sveiver inn duppen med denne knappen. 
@@ -437,8 +502,10 @@ public class CanvasController implements Initializable {
             duppMove = true;
             timerDupp.start();
             duppTimerstat = true;
-            line = new Line(fishingrod.getX()+35, fishingrod.getY()-25, dupp.getX(), dupp.getY());
+            // line = new Line(fishingrod.getX()+35, fishingrod.getY()-25, dupp.getX(), dupp.getY());
             anchorPane.getChildren().add(line);
+
+            Fish caughtFiss = null;
         }
         if (keyEvent.getCode() == KeyCode.D || keyEvent.getCode() == KeyCode.A){
             timerBoat.stop();
@@ -503,10 +570,35 @@ public class CanvasController implements Initializable {
                     // System.out.println(fish.getAngle());
                     // System.out.println("Ny X: "+fish.getPosX());
                     // System.out.println("Ny Y: "+fish.getPosY());
+                    if ((Math.abs(dupp.getX()-fish.getPosX()) <= 10) && (Math.abs(dupp.getY()-fish.getPosY()) <= 10) && duppMove == false && caughtFiss == null){
+                        System.out.println("FISK");
+                        fishes.remove(fish);
+                        caughtFiss = fish;
+                        break;
+                    }
                 }
             }
         };
         timer4.start();
+    }
+
+    //  DISPLAY FISHES
+    @FXML
+    private void handleDisplayFissClick() {
+        //  ÅPNE NYTT VINDU
+        // Stage newStageWindow = new Stage();
+        // StackPane newLayout = new StackPane();
+        // Scene newScene = new Scene(newLayout, 230, 100);
+        // newStageWindow.setScene(newScene);
+        // newStageWindow.show();
+
+        // Scene s = new Scene(new StackPane());
+        // anchorPane.getChildren().add(displayFishPane);
+        // stage = (Stage) anchorPane.getScene().getWindow();
+        // primaryScene = stage.getScene();
+        // stage.setScene(new Scene(displayFishPane));
+        // displayFishPane.getChildren().add(new Button());
+        displayFisses.setVisible(false);
     }
 
     //  Hjelpefunksjon.
