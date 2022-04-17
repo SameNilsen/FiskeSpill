@@ -354,7 +354,7 @@ public class CanvasController implements Initializable {
                 anchorPane.getChildren().remove(line);
                 caughtFiss.setPos(new Point2D(10, 10));
                 caughtFishesList.add(caughtFiss);
-                displayFisses.getChildren().add(caughtFiss.getFish());
+                // displayFisses.getChildren().add(caughtFiss.getFish());
                 caughtFiss = null;
                 
                 // dupp.setCenterX(boat_x);
@@ -598,7 +598,18 @@ public class CanvasController implements Initializable {
         // primaryScene = stage.getScene();
         // stage.setScene(new Scene(displayFishPane));
         // displayFishPane.getChildren().add(new Button());
-        displayFisses.setVisible(false);
+        if (displayFisses.getChildren().isEmpty()){
+            for (Fish fish : caughtFishesList) {
+                displayFisses.getChildren().add(fish.getFish());
+                fish.setPos(new Point2D(caughtFishesList.indexOf(fish)*50, fish.getPosY()));
+            }
+        }
+        else{
+            for (Fish fish : caughtFishesList) {
+                displayFisses.getChildren().remove(fish.getFish());
+            }
+        }
+        // displayFisses.setVisible(false);
     }
 
     //  Hjelpefunksjon.
