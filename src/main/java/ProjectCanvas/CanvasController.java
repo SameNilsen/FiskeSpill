@@ -24,6 +24,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 // import javafx.scene.layout.Background;
 // import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -135,6 +140,10 @@ public class CanvasController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Image img = new Image(getClass().getResourceAsStream("bckgrnd.png"));
+        BackgroundImage bImg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background bGround = new Background(bImg);
+        anchorPane.setBackground(bGround);
         //  Båt
         this.boat = new Boat(new Point2D(0, 10), boatImage, image);
 
@@ -345,17 +354,19 @@ public class CanvasController implements Initializable {
                 caughtFiss.setPos(new Point2D(dupp.getX(), dupp.getY()));
             }
 
-            if ((Math.abs(dupp.getX()-dest_x) <= 50) && (Math.abs(dupp.getY()-dest_y) <= 50) && caughtFiss != null){
+            if ((Math.abs(dupp.getX()-dest_x) <= 50) && (Math.abs(dupp.getY()-dest_y) <= 50)){
                 anchorPane.getChildren().remove(dupp.getEllipse());
                 dupp.moveDupp(new Point2D(dest_x, dest_y));
                 timerDupp.stop();
                 duppMove = true;
                 duppTimerstat = false;
                 anchorPane.getChildren().remove(line);
-                caughtFiss.setPos(new Point2D(10, 10));
-                caughtFishesList.add(caughtFiss);
-                // displayFisses.getChildren().add(caughtFiss.getFish());
-                caughtFiss = null;
+                if (caughtFiss != null){
+                    caughtFiss.setPos(new Point2D(10, 10));
+                    caughtFishesList.add(caughtFiss);
+                    // displayFisses.getChildren().add(caughtFiss.getFish());
+                    caughtFiss = null;
+                }
                 
                 // dupp.setCenterX(boat_x);
                 // dupp.setCenterY(boat_y);
