@@ -17,7 +17,7 @@ public class FishingRod {
         this.image.setPreserveRatio(true);
         this.image.setFitHeight(75);
         this.image.setFitWidth(75);
-        this.image.setY(410);
+        this.image.setY(390);
         this.image.setX(435);
     }
 

@@ -87,7 +87,7 @@ public class CanvasController implements Initializable {
     private ImageView imageViewRod = new ImageView();
 
     @FXML
-    Image boatImage = new Image(getClass().getResourceAsStream("boat2.png"));
+    Image boatImage = new Image(getClass().getResourceAsStream("fishman.png"));
 
     private Image fishinRodImage = new Image(getClass().getResourceAsStream("fishingRod.png"));
     private FishMain main;
@@ -214,10 +214,10 @@ public class CanvasController implements Initializable {
                         //System.out.println((currentNanoTime-startTime)*Math.pow(10, -9));
                         // System.out.println(dupp.localToScene(dupp.getBoundsInLocal()).getMaxX());
                         if (boat.direction){
-                            dupp.moveDupp(new Point2D(image.getX()+545+(50 * Math.cos(Math.toRadians(30)) * time), 410+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1));
+                            dupp.moveDupp(new Point2D(image.getX()+465+(50 * Math.cos(Math.toRadians(30)) * time), 390+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1));
                         }
                         else{
-                            dupp.moveDupp(new Point2D(image.getX()+290+(50 * Math.cos(Math.toRadians(30)) * time * -1), 410+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1));
+                            dupp.moveDupp(new Point2D(image.getX()+465+(50 * Math.cos(Math.toRadians(30)) * time * -1), 390+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1));
                         }
                         // dupp.setCenterX(image.getX()+545+(50 * Math.cos(Math.toRadians(30)) * time));
                         // dupp.setCenterY(410+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1);
@@ -252,11 +252,11 @@ public class CanvasController implements Initializable {
                 }
                 if (boat.direction){
                     line.setStartX(fishingrod.getX()+80);
-                    line.setStartY(fishingrod.getY()-25);
+                    line.setStartY(fishingrod.getY()-50);
                 }
                 else{
                     line.setStartX(fishingrod.getX());
-                    line.setStartY(fishingrod.getY()-25);
+                    line.setStartY(fishingrod.getY()-50);
                 }
                 line.setEndX(dupp.getX());
                 line.setEndY(dupp.getY());
@@ -374,11 +374,11 @@ public class CanvasController implements Initializable {
             }
             if (boat.direction){
                 line.setStartX(fishingrod.getX()+80);
-                line.setStartY(fishingrod.getY()-25);
+                line.setStartY(fishingrod.getY()-50);
             }
             else{
                 line.setStartX(fishingrod.getX());
-                line.setStartY(fishingrod.getY()-25);
+                line.setStartY(fishingrod.getY()-50);
             }
             line.setEndX(dupp.getX());
             line.setEndY(dupp.getY());
@@ -407,7 +407,7 @@ public class CanvasController implements Initializable {
                 // boatDir = "right";
                 boat.direction = true;
                 // boat.image.setScaleX(1);
-                fishingrod.moveRod(new Point2D(boat.getX()+490, fishingrod.getY()));
+                fishingrod.moveRod(new Point2D(boat.getX()+440, fishingrod.getY()));
                 timerBoat.start();
                 // image.setScaleX(1);
                 // imageViewRod.setX(image.getX()+450);
@@ -434,7 +434,7 @@ public class CanvasController implements Initializable {
             else if (e.getCode() == KeyCode.A){
                 boat.direction = false;
                 // boat.image.setScaleX(-1);
-                fishingrod.moveRod(new Point2D(boat.getX()+290, fishingrod.getY()));
+                fishingrod.moveRod(new Point2D(boat.getX()+465, fishingrod.getY()));
                 timerBoat.start();
                 //  Flytter båt, fiskestang, dupp til venstre.
                 // KOMMENTERT UT FOR TESTING
@@ -551,7 +551,7 @@ public class CanvasController implements Initializable {
         background.setHbarPolicy(ScrollBarPolicy.NEVER);
         background.setVbarPolicy(ScrollBarPolicy.NEVER);
         background.setHvalue(0.01);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
 
             Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
             fishes.add(fish2);
@@ -576,7 +576,23 @@ public class CanvasController implements Initializable {
                     // System.out.println("gammel Y: "+fish.getPosY());
                     // System.out.println("X: "+fish.calculateNextX());
                     // System.out.println("Y: "+fish.calculateNextY());
-                    fish.setPos(new Point2D(fish.getPosX()+fish.calculateNextX(), fish.getPosY()+fish.calculateNextY()));
+                    if ((Math.abs(dupp.getX()-fish.getPosX()) <= 50) && (Math.abs(dupp.getY()-fish.getPosY()) <= 50) && duppMove == false && caughtFiss == null && fish.getPosY() > 550){
+                        fish.setPos(new Point2D(fish.getPosX() + (dupp.getX()-fish.getPosX())/50, fish.getPosY() - Math.abs((dupp.getY()-fish.getPosY()))/50));
+
+                        //  MÅ ENDRES MELLOM HER ...
+
+                        if (dupp.getY() < fish.getPosY()){
+                            fish.setAngle(180 + Math.toDegrees(Math.atan( (Math.abs(dupp.getY()-fish.getPosY()))/ (Math.abs(dupp.getX()-fish.getPosX())) )));
+                        }
+                        else{
+                            fish.setAngle(Math.toDegrees(Math.atan( (Math.abs(dupp.getY()-fish.getPosY()))/ (Math.abs(dupp.getX()-fish.getPosX())) )));
+                        }
+
+                        //  ... OG HER
+                    }
+                    else{
+                        fish.setPos(new Point2D(fish.getPosX()+fish.calculateNextX(), fish.getPosY()+fish.calculateNextY()));
+                    }
                     fish.getFish().setRotate(fish.getAngle());   
                     // System.out.println(fish.getAngle());
                     // System.out.println("Ny X: "+fish.getPosX());

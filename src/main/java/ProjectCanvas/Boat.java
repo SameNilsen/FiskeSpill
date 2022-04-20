@@ -19,6 +19,11 @@ public class Boat {
         this.pos = pos;
         this.image = image;
         this.image.setImage(boatImage);
+        this.image.setPreserveRatio(true);
+        this.image.setFitHeight(350);
+        this.image.setFitWidth(350);
+        this.image.setY(-60);
+        this.image.setX(0);
     }
 
     public void moveBoat(Point2D newPos) {

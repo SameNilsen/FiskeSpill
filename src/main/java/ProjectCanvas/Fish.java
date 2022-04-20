@@ -3,6 +3,7 @@ package ProjectCanvas;
 import java.io.Console;
 import java.util.Random;
 
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,7 +27,6 @@ public class Fish {
     //  den opprettes, og så følger den en lineær bane ut ifra den vinkelen. Senere bær vi legge på 
     //  individuelle hastigheter, bilder til fiskene, bevegelser osv.
 
-    private double speed = 2;
     // private double size;
     private double endring_x;
     private double endring_y;
@@ -34,24 +34,34 @@ public class Fish {
     private ImageView imageView = new ImageView();
     // private Image fishImage;
     private int timeTillSwitch;
+    private boolean dir;
+    private long startTime;
+    // AnimationTimer turnTimer;
     
     Random rand = new Random();
-    private double angle = rand.nextInt(360);
+    private double angle;
+    private double speed;
 
     public Fish(Point2D pos, Point2D size) {
         // this.fish = new Ellipse(pos.getX(), pos.getY(), size.getX(), size.getY());
         double posX = pos.getX();
         double posY = pos.getY();
+        this.angle = rand.nextInt(0, 360);
+        if ((0 < angle && angle < 90) || (270 < angle && angle < 369)){
+            this.dir = true;
+        }
+        else{
+            this.dir = false;
+        }
+        this.speed = rand.nextInt(1, 4);
 
         imageView.setImage(new Image(getClass().getResourceAsStream("fish1.png")));
         imageView.setPreserveRatio(true);
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
+        imageView.setFitHeight(rand.nextInt(30, 60));
+        imageView.setFitWidth(rand.nextInt(30, 80));
         imageView.setY(posY);
         imageView.setX(posX);
 
-
-    
     }
 
 
@@ -64,7 +74,47 @@ public class Fish {
         return this.speed;
     }
 
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
     public double getAngle() {
+        int randomChange = rand.nextInt(1000);
+        if (randomChange < 5){
+            int randomDir = rand.nextInt(-1, 2);
+            startTime = System.nanoTime();
+            AnimationTimer turnTimer = new AnimationTimer() {
+
+                @Override
+                public void handle(long currentNanoTime) {
+                    double time = (currentNanoTime-startTime)*Math.pow(10, -9);
+                    // System.out.println(time + "    "+angle);
+                    if (time > 1){
+                        this.stop();
+                    }
+                    else{
+                        angle += randomDir;
+                        imageView.setRotate(angle);
+                    }
+                }
+            };
+            turnTimer.start();
+            
+            // for (int i = 0; i < 10000; i++) {
+            //     this.angle += 0.01;
+            //     this.imageView.setRotate(this.angle);
+            // }
+            
+            // if (this.dir){
+            //     System.out.println("SWITCH");
+            //     this.angle = rand.nextInt(-90, 90);
+            // }
+            // else{
+            //     System.out.println("SWITCH");
+            //     this.angle = rand.nextInt(90, 270);
+            // }
+        }
+
         return this.angle;
     }
 
@@ -81,10 +131,14 @@ public class Fish {
     public double calculateNextX() {
         if (this.getPosX() > 1500 || this.getPosX() < 0){
             this.angle = 180 - this.getAngle();
-            // if (this.getPosX() > 1500)
-            // this.imageView.setScaleX(-1);
-            // else
-            // this.imageView.setScaleX(1);
+            if (this.getPosX() > 1500){
+                this.imageView.setScaleY(-1);
+                this.dir = false;
+            }
+            else{
+                this.imageView.setScaleY(1);
+                this.dir = true;
+            }
         }
         endring_x = Math.cos(Math.toRadians(this.getAngle()))*speed;
         return endring_x;
