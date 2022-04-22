@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -11,14 +12,22 @@
 
 <VBox onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ProjectCanvas.CanvasController">
    <children>
-      <HBox prefHeight="0.0" prefWidth="1477.0">
+      <HBox fx:id="topBox" prefHeight="0.0" prefWidth="1477.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleDisplayFissClick" text="DisplayFiss" />
-            <Button mnemonicParsing="false" onAction="#handleButtonClick" text="SpawnFiss" />
-            <Button mnemonicParsing="false" onAction="#handleFissButton" text="movfiss" />
+            <Button fx:id="displayFissButton" mnemonicParsing="false" onAction="#handleDisplayFissClick" text="DisplayFiss" />
+            <Button fx:id="spawnFissButton" mnemonicParsing="false" onAction="#handleButtonClick" text="SpawnFiss" />
+            <Button fx:id="movfissButton" mnemonicParsing="false" onAction="#handleFissButton" text="movfiss" />
+            <Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStartButton" text="Start">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Text fx:id="timerText" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" />
+            <Text fx:id="scoreText" strokeType="OUTSIDE" strokeWidth="0.0" text="Score" />
             <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
          </children>
       </HBox>
+      <AnchorPane fx:id="displayFisses" prefHeight="200.0" prefWidth="200.0" />
       <ScrollPane fx:id="background" onMousePressed="#moveScreen" onMouseReleased="#stopScreen" prefWidth="1477.0">
          <content>
             <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" onMouseMoved="#displayPosition" prefHeight="1000.0" prefWidth="1500.0">
@@ -32,6 +41,5 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <AnchorPane fx:id="displayFisses" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </VBox>

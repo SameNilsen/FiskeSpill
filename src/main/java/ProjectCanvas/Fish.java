@@ -1,6 +1,8 @@
 package ProjectCanvas;
 
 import java.io.Console;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javafx.animation.AnimationTimer;
@@ -36,13 +38,24 @@ public class Fish {
     private int timeTillSwitch;
     private boolean dir;
     private long startTime;
-    // AnimationTimer turnTimer;
+    private Image fish1 = new Image(getClass().getResourceAsStream("fish1.png"));
+    private Image blueFish = new Image(getClass().getResourceAsStream("blueFish.png"));
+    private Image pinkFish = new Image(getClass().getResourceAsStream("pinkFish.png"));
+    private List<Image> fishImages = new ArrayList<Image>();
+    private List<Integer> points = new ArrayList<Integer>();
     
     Random rand = new Random();
     private double angle;
     private double speed;
 
     public Fish(Point2D pos, Point2D size) {
+        fishImages.add(fish1);
+        fishImages.add(blueFish);
+        fishImages.add(pinkFish);
+        points.add(100);
+        points.add(300);
+        points.add(800);
+
         // this.fish = new Ellipse(pos.getX(), pos.getY(), size.getX(), size.getY());
         double posX = pos.getX();
         double posY = pos.getY();
@@ -55,7 +68,8 @@ public class Fish {
         }
         this.speed = rand.nextInt(1, 4);
 
-        imageView.setImage(new Image(getClass().getResourceAsStream("fish1.png")));
+        imageView.setImage(fishImages.get(rand.nextInt(fishImages.size())));
+        System.out.println(":::::::::"+fishImages.indexOf(imageView.getImage()));
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(rand.nextInt(30, 60));
         imageView.setFitWidth(rand.nextInt(30, 80));
@@ -72,6 +86,10 @@ public class Fish {
 
     public double getSpeed() {
         return this.speed;
+    }
+
+    public int getPoint() {
+        return points.get(fishImages.indexOf(imageView.getImage()));
     }
 
     public void setAngle(double angle) {

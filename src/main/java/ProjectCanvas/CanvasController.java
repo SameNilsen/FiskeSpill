@@ -2,6 +2,7 @@ package ProjectCanvas;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
@@ -29,6 +30,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.HBox;
 // import javafx.scene.layout.Background;
 // import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -72,6 +74,21 @@ public class CanvasController implements Initializable {
     ScrollPane background;
 
     @FXML
+    HBox topBox;
+
+    @FXML
+    Button displayFissButton;
+
+    @FXML
+    Button spawnFissButton;
+
+    @FXML
+    Button movfissButton;
+
+    @FXML
+    Button startButton;
+
+    @FXML
     AnchorPane anchorPane;
 
     @FXML
@@ -79,6 +96,12 @@ public class CanvasController implements Initializable {
 
     @FXML
     private Text status;
+
+    @FXML
+    private Text timerText;
+
+    @FXML
+    private Text scoreText;
 
     @FXML
     private ImageView image;
@@ -97,6 +120,8 @@ public class CanvasController implements Initializable {
 
     private AnimationTimer timer4;
 
+    // AnimationTimer timerDisplayFiss;
+
     ArrayList<Fish> fishes = new ArrayList<Fish>();
 
     ArrayList<Fish> caughtFishesList = new ArrayList<Fish>();
@@ -104,6 +129,7 @@ public class CanvasController implements Initializable {
     private String boatDir = "right";
 
     private long startTime;
+    private long startTime1;
 
     private Ellipse duppen;
 
@@ -126,6 +152,9 @@ public class CanvasController implements Initializable {
 
     private Fish caughtFiss = null;
 
+    private int score;
+    private List<Integer> hichscorelist = new ArrayList<Integer>();
+
     AnchorPane displayFishPane;
 
     Stage stage;
@@ -144,6 +173,14 @@ public class CanvasController implements Initializable {
         BackgroundImage bImg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background bGround = new Background(bImg);
         anchorPane.setBackground(bGround);
+
+        topBox.setStyle("-fx-background-color: #4FD1EB;");
+        displayFisses.setStyle("-fx-background-color: #4FD1EB;");
+        displayFissButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
+        spawnFissButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
+        movfissButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
+        startButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;"); //  SetDisable...
+
         //  Båt
         this.boat = new Boat(new Point2D(0, 10), boatImage, image);
 
@@ -362,6 +399,7 @@ public class CanvasController implements Initializable {
                 duppTimerstat = false;
                 anchorPane.getChildren().remove(line);
                 if (caughtFiss != null){
+                    score += caughtFiss.getPoint();
                     caughtFiss.setPos(new Point2D(10, 10));
                     caughtFishesList.add(caughtFiss);
                     // displayFisses.getChildren().add(caughtFiss.getFish());
@@ -473,15 +511,16 @@ public class CanvasController implements Initializable {
             //  Dette er en hjelpeknapp som printer ut ulike ting som kan brukes til debugging.
             if (e.getCode() == KeyCode.I){
                 // System.out.println(dupp.localToScene(dupp.getBoundsInLocal()).getMaxY());
-                System.out.println("BoatX: "+boat.getX());
-                System.out.println("BoatY: "+boat.getY());
-                System.out.println("RodX: "+fishingrod.getX());
-                System.out.println("RodY: "+fishingrod.getY());
-                System.out.println(displayFishPane.localToScene(displayFishPane.getBoundsInLocal()).getMinY());
-                System.out.println(anchorPane.getBoundsInLocal());
-                System.out.println(anchorPane.getBoundsInParent());
-                System.out.println(anchorPane.parentToLocal(background.getParent().getLayoutX(), 0));
-                stage.setScene(primaryScene);
+                // System.out.println("BoatX: "+boat.getX());
+                // System.out.println("BoatY: "+boat.getY());
+                // System.out.println("RodX: "+fishingrod.getX());
+                // System.out.println("RodY: "+fishingrod.getY());
+                // System.out.println(displayFishPane.localToScene(displayFishPane.getBoundsInLocal()).getMinY());
+                // System.out.println(anchorPane.getBoundsInLocal());
+                // System.out.println(anchorPane.getBoundsInParent());
+                // System.out.println(anchorPane.parentToLocal(background.getParent().getLayoutX(), 0));
+                // stage.setScene(primaryScene);
+                System.out.println(hichscorelist);
             }
             
             //  Man sveiver inn duppen med denne knappen. 
@@ -551,7 +590,7 @@ public class CanvasController implements Initializable {
         background.setHbarPolicy(ScrollBarPolicy.NEVER);
         background.setVbarPolicy(ScrollBarPolicy.NEVER);
         background.setHvalue(0.01);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
 
             Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
             fishes.add(fish2);
@@ -609,6 +648,19 @@ public class CanvasController implements Initializable {
         timer4.start();
     }
 
+    AnimationTimer timerDisplayFiss = new AnimationTimer()
+            {
+                public void handle(long currentNanoTime)
+                { 
+                    for (Fish fish : caughtFishesList) {
+                        if (!displayFisses.getChildren().contains(fish.getFish())){
+                            displayFisses.getChildren().add(fish.getFish());
+                            fish.setPos(new Point2D(caughtFishesList.indexOf(fish)*50, fish.getPosY()));
+                        }
+                    }
+                }
+            };
+
     //  DISPLAY FISHES
     @FXML
     private void handleDisplayFissClick() {
@@ -625,25 +677,75 @@ public class CanvasController implements Initializable {
         // primaryScene = stage.getScene();
         // stage.setScene(new Scene(displayFishPane));
         // displayFishPane.getChildren().add(new Button());
+        // if (displayFisses.getChildren().isEmpty()){
+        //     for (Fish fish : caughtFishesList) {
+        //         displayFisses.getChildren().add(fish.getFish());
+        //         fish.setPos(new Point2D(caughtFishesList.indexOf(fish)*50, fish.getPosY()));
+        //     }
+        // }
+        // else{
+        //     for (Fish fish : caughtFishesList) {
+        //         displayFisses.getChildren().remove(fish.getFish());
+        //     }
+        // }
+        // displayFisses.setVisible(false);
         if (displayFisses.getChildren().isEmpty()){
-            for (Fish fish : caughtFishesList) {
-                displayFisses.getChildren().add(fish.getFish());
-                fish.setPos(new Point2D(caughtFishesList.indexOf(fish)*50, fish.getPosY()));
-            }
+            timerDisplayFiss.start();
         }
         else{
             for (Fish fish : caughtFishesList) {
                 displayFisses.getChildren().remove(fish.getFish());
             }
+            timerDisplayFiss.stop();
         }
-        // displayFisses.setVisible(false);
+    }
+
+    @FXML
+    private void handleStartButton() {
+        startTime1 = System.nanoTime();
+        score = 0;
+        for (Fish fish : caughtFishesList) {
+            displayFisses.getChildren().remove(fish.getFish());
+        }
+        caughtFishesList = new ArrayList<Fish>();
+        AnimationTimer timerforTimer = new AnimationTimer()
+        {
+            public void handle(long currentNanoTime)
+            { 
+                double time = 60-(currentNanoTime-startTime1)*Math.pow(10, -9);
+                timerText.setText("Time: "+ Math.round(time));
+                scoreText.setText(", Score:"+score);
+                if (time < 0){
+                    timerText.setText("FERDIG!!!");
+                    for (int i = 0; i < hichscorelist.size()+1; i++) {
+                        if (i == hichscorelist.size()){
+                            if (hichscorelist.size() < 10){
+                                hichscorelist.add(score);
+                                break;
+                            }
+                        }
+                        else{
+                            if (score > hichscorelist.get(i)){
+                                hichscorelist.add(i, score);
+                                if (hichscorelist.size() > 10){
+                                    hichscorelist = hichscorelist.subList(0, 10);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    this.stop();
+                }
+            }
+        };
+        timerforTimer.start();
     }
 
     //  Hjelpefunksjon.
     //  Viser x og y posisjon til musa når man beveger den.
     @FXML
     private void displayPosition(MouseEvent e) {
-        status.setText("X = "+Math.round(e.getX())+" Y = "+Math.round(e.getY()) + ", viewport: " + dupp.getEllipse().localToScene(dupp.getEllipse().getBoundsInLocal()).getMaxY());
+        status.setText("  -  X = "+Math.round(e.getX())+" Y = "+Math.round(e.getY()) + ", viewport: " + dupp.getEllipse().localToScene(dupp.getEllipse().getBoundsInLocal()).getMaxY());
         // background.setHvalue((e.getX())/1500);
     }
 
