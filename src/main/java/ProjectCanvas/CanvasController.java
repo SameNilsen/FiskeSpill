@@ -617,10 +617,27 @@ public class CanvasController implements Initializable {
                         //  MÅ ENDRES MELLOM HER ...
 
                         if (dupp.getY() < fish.getPosY()){
-                            fish.setAngle(180 + Math.toDegrees(Math.atan( (Math.abs(dupp.getY()-fish.getPosY()))/ (Math.abs(dupp.getX()-fish.getPosX())) )));
+                            // fish.setAngle(180 + Math.toDegrees(Math.atan( (Math.abs(dupp.getY()-fish.getPosY()))/ (Math.abs(dupp.getX()-fish.getPosX())) )));
+                            double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
+                            double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
+                            
+                            double alpha = Math.toDegrees(Math.atan(dx/dy));
+                            // if (fish.getPosX() < dupp.getX())
+                            //     alpha *= -1;
+                            System.out.println(String.format("Vinkel: %f", alpha));
+                            fish.setAngle(-90+(90-alpha));
+                            
                         }
                         else{
-                            fish.setAngle(Math.toDegrees(Math.atan( (Math.abs(dupp.getY()-fish.getPosY()))/ (Math.abs(dupp.getX()-fish.getPosX())) )));
+                            // fish.setAngle(Math.toDegreefs(Math.atan( (Math.abs(dupp.getY()-fish.getPosY()))/ (Math.abs(dupp.getX()-fish.getPosX())) )));
+                            double dx = (fishingrod.getX()+80)-dupp.getX();
+                            double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
+                            
+                            double alpha = Math.toDegrees(Math.atan(dx/dy));
+                            // if (fish.getPosX() < dupp.getX())
+                            //     alpha *= -1;
+                            System.out.println(String.format("Vinkel: %f", alpha));
+                            fish.setAngle(-90+(90-alpha));
                         }
 
                         //  ... OG HER
