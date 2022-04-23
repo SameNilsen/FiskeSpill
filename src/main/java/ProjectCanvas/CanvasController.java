@@ -139,7 +139,7 @@ public class CanvasController implements Initializable {
     private int y1 = 0;
 
     private boolean duppMove = true;
-    private boolean duppTimerstat = false;
+    private boolean duppUte = false;
 
     private Line line;
 
@@ -392,7 +392,7 @@ public class CanvasController implements Initializable {
                 dupp.moveDupp(new Point2D(dest_x, dest_y));
                 timerDupp.stop();
                 duppMove = true;
-                duppTimerstat = false;
+                duppUte = false;
                 anchorPane.getChildren().remove(line);
                 if (caughtFiss != null){
                     score += caughtFiss.getPoint();
@@ -439,10 +439,14 @@ public class CanvasController implements Initializable {
                 // KOMMENTERT UT FOR TESTING
                 // System.out.println((image.getX()+500) + " " + background.getHvalue());
                 // boatDir = "right";
-                boat.direction = true;
-                // boat.image.setScaleX(1);
-                fishingrod.moveRod(new Point2D(boat.getX()+440, fishingrod.getY()));
-                timerBoat.start();
+                if (!duppUte){
+
+                    boat.direction = true;
+                    // boat.image.setScaleX(1);
+                    fishingrod.moveRod(new Point2D(boat.getX()+440, fishingrod.getY()));
+                    timerBoat.start(); 
+                }
+                
                 // image.setScaleX(1);
                 // imageViewRod.setX(image.getX()+450);
                 // imageViewRod.setScaleX(1);
@@ -466,10 +470,13 @@ public class CanvasController implements Initializable {
                 // camera.setLayoutX(boat.getCenterX());
             }
             else if (e.getCode() == LEFT_KEY){
-                boat.direction = false;
-                // boat.image.setScaleX(-1);
-                fishingrod.moveRod(new Point2D(boat.getX()+465, fishingrod.getY()));
-                timerBoat.start();
+                if (!duppUte){
+                    boat.direction = false;
+                    // boat.image.setScaleX(-1);
+                    fishingrod.moveRod(new Point2D(boat.getX()+465, fishingrod.getY()));
+                    timerBoat.start();
+                }
+                
                 //  Flytter båt, fiskestang, dupp til venstre.
                 // KOMMENTERT UT FOR TESTING
                 // System.out.println((image.getX()+250) + " " + background.getHvalue());
@@ -496,12 +503,15 @@ public class CanvasController implements Initializable {
             }
             //  Når man trykker R roteres fiskestangen bakover.
             if (e.getCode() == KeyCode.R){
-                if (boat.direction){
-                    imageViewRod.setRotate(imageViewRod.getRotate()-1);
+                if (!duppUte){
+                    if (boat.direction){
+                        imageViewRod.setRotate(imageViewRod.getRotate()-1);
+                    }
+                    else{
+                        imageViewRod.setRotate(imageViewRod.getRotate()+1);
+                    }
                 }
-                else{
-                    imageViewRod.setRotate(imageViewRod.getRotate()+1);
-                }
+                
             }
 
             //  Dette er en hjelpeknapp som printer ut ulike ting som kan brukes til debugging.
@@ -521,9 +531,10 @@ public class CanvasController implements Initializable {
             
             //  Man sveiver inn duppen med denne knappen. 
             if (e.getCode() == KeyCode.F){
-                timerDupp.stop();
-                duppTimerstat = false;
-                timerReelInn.start();
+                if (duppMove == false){
+                    timerDupp.stop();
+                    timerReelInn.start(); 
+                }
             }
             //System.out.println(234234);
         });
@@ -542,16 +553,19 @@ public class CanvasController implements Initializable {
     @FXML
     private void handleKeyReleased(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.R){
-            anchorPane.getChildren().add(dupp.getEllipse());
-            imageViewRod.setRotate(0);
-            startTime = System.nanoTime();
-            duppMove = true;
-            timerDupp.start();
-            duppTimerstat = true;
-            // line = new Line(fishingrod.getX()+35, fishingrod.getY()-25, dupp.getX(), dupp.getY());
-            anchorPane.getChildren().add(line);
+            if (!duppUte){
+                anchorPane.getChildren().add(dupp.getEllipse());
+                imageViewRod.setRotate(0);
+                startTime = System.nanoTime();
+                duppMove = true;
+                timerDupp.start();
+                duppUte = true;
+                // line = new Line(fishingrod.getX()+35, fishingrod.getY()-25, dupp.getX(), dupp.getY());
+                anchorPane.getChildren().add(line);
 
-            Fish caughtFiss = null;
+                Fish caughtFiss = null;
+            }
+            
         }
         if (keyEvent.getCode() == KeyCode.D || keyEvent.getCode() == KeyCode.A){
             timerBoat.stop();
@@ -559,7 +573,6 @@ public class CanvasController implements Initializable {
         if (keyEvent.getCode() == KeyCode.F){
             if (duppMove == false){
                 timerDupp.start();
-                duppTimerstat = true;
             }
             timerReelInn.stop();
         }
