@@ -112,7 +112,7 @@ public class CanvasController implements Initializable {
     private FishMain main;
     private AnimationTimer timer2;
 
-    private AnimationTimer timer3;
+    private AnimationTimer focusTimer;
 
     private AnimationTimer timer4;
 
@@ -222,14 +222,14 @@ public class CanvasController implements Initializable {
 
         //  En foreløpig ubrukt timer.
         //  En slik timer er forøvrig en type bakgrunnsprosess som gjør det mulig at flere ting skjer samtidig.
-        timer3 = new AnimationTimer()
+        focusTimer = new AnimationTimer()
         {
             public void handle(long currentNanoTime)
             {   
-                // status.setY(value);
+                anchorPane.requestFocus();
             }
         };
-        // timer3.start();
+        focusTimer.start();
     }
 
     //  Dette er en timer som startes idet duppen forlater fiskestangen. Duppen følger en slags krumlinjet
