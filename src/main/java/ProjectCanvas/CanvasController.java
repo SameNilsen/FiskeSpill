@@ -634,24 +634,26 @@ public class CanvasController implements Initializable {
                             double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
                             double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
                             
-                            double alpha = Math.toDegrees(Math.atan(dx/dy));
-                            // if (fish.getPosX() < dupp.getX())
-                            //     alpha *= -1;
+                            double alpha = 90 - Math.abs(Math.toDegrees(Math.atan(dy/dx)));
+                            if (dupp.getX() < fishingrod.getX()+80)
+                                alpha *= -1;
+
                             System.out.println(String.format("Vinkel: %f", alpha));
-                            fish.setAngle(-90+(90-alpha));
-                            
+                            fish.setAngle(-90-(alpha));
                         }
                         else{
                             // fish.setAngle(Math.toDegreefs(Math.atan( (Math.abs(dupp.getY()-fish.getPosY()))/ (Math.abs(dupp.getX()-fish.getPosX())) )));
-                            double dx = (fishingrod.getX()+80)-dupp.getX();
+                            double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
                             double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
                             
-                            double alpha = Math.toDegrees(Math.atan(dx/dy));
-                            // if (fish.getPosX() < dupp.getX())
-                            //     alpha *= -1;
+                            double alpha = 90 - Math.abs(Math.toDegrees(Math.atan(dy/dx)));
+                            if (dupp.getX() < fishingrod.getX()+80)
+                                alpha *= -1;
+                                
                             System.out.println(String.format("Vinkel: %f", alpha));
-                            fish.setAngle(-90+(90-alpha));
+                            fish.setAngle(-90-(alpha));
                         }
+                        fish.setPos(new Point2D(dupp.getX(), dupp.getY()));
 
                         //  ... OG HER
                     }
