@@ -167,6 +167,9 @@ public class Fish {
             this.angle = 360 - this.getAngle();
             //System.out.println("angleChange: " +this.getAngle());
         }
+        if (this.getPosY() < 490){
+            return 505;
+        }
         endring_y = Math.sin(Math.toRadians(this.getAngle()))*speed;
         return endring_y;
     }

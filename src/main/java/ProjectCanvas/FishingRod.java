@@ -21,6 +21,10 @@ public class FishingRod {
         this.image.setX(435);
     }
 
+    public ImageView getFishingRod() {
+        return this.image;
+    }
+
     public void moveRod(Point2D newPos) {
         if (newPos.getX() < this.pos.getX()) {
             this.direction = false;

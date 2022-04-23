@@ -8,23 +8,42 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <VBox onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ProjectCanvas.CanvasController">
    <children>
       <HBox fx:id="topBox" prefHeight="0.0" prefWidth="1477.0">
          <children>
-            <Button fx:id="displayFissButton" mnemonicParsing="false" onAction="#handleDisplayFissClick" text="DisplayFiss" />
-            <Button fx:id="spawnFissButton" mnemonicParsing="false" onAction="#handleButtonClick" text="SpawnFiss" />
-            <Button fx:id="movfissButton" mnemonicParsing="false" onAction="#handleFissButton" text="movfiss" />
+            <Button fx:id="displayFissButton" mnemonicParsing="false" onAction="#handleDisplayFissClick" text="DisplayFiss">
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font></Button>
+            <Button fx:id="spawnFissButton" mnemonicParsing="false" onAction="#handleButtonClick" text="SpawnFiss">
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font></Button>
+            <Button fx:id="movfissButton" mnemonicParsing="false" onAction="#handleFissButton" text="movfiss">
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font></Button>
             <Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStartButton" text="Start">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font>
             </Button>
-            <Text fx:id="timerText" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer" />
-            <Text fx:id="scoreText" strokeType="OUTSIDE" strokeWidth="0.0" text="Score" />
-            <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="timerText" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer: 60">
+               <font>
+                  <Font name="Bell MT" size="21.0" />
+               </font></Text>
+            <Text fx:id="scoreText" strokeType="OUTSIDE" strokeWidth="0.0" text="| Score: 0">
+               <font>
+                  <Font name="Bell MT" size="21.0" />
+               </font></Text>
+            <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
       </HBox>
       <AnchorPane fx:id="displayFisses" prefHeight="200.0" prefWidth="200.0" />
