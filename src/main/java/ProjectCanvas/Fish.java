@@ -88,8 +88,12 @@ public class Fish {
         return this.speed;
     }
 
-    public int getPoint() {
-        return points.get(fishImages.indexOf(imageView.getImage()));
+    public double getSize() {
+        return 1 + (this.getFish().getFitWidth() + this.getFish().getFitHeight())*0.01;
+    }
+
+    public double getPoint() {
+        return points.get(fishImages.indexOf(imageView.getImage())) * this.getSize();
     }
 
     public void setAngle(double angle) {

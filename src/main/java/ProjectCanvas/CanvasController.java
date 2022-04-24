@@ -1,5 +1,7 @@
 package ProjectCanvas;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,6 +158,8 @@ public class CanvasController implements Initializable {
     Stage stage;
     Scene primaryScene;
 
+    FileHandlingInterface files = new FileHandling();
+
     private void initMain(Point2D mousePos) {
         main = new FishMain();
     }
@@ -165,6 +169,15 @@ public class CanvasController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        
+        try {
+            hichscorelist =  files.load("HighscoreList");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("Highscore:" + hichscorelist);
+
         Image img = new Image(getClass().getResourceAsStream("bckgrnd.png"));
         BackgroundImage bImg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background bGround = new Background(bImg);
@@ -534,6 +547,15 @@ public class CanvasController implements Initializable {
                 System.out.println("BoatX: "+boat.getX());
                 System.out.println("RodX: "+fishingrod.getX());
                 System.out.println(hichscorelist);
+            }
+
+            if (e.getCode() == KeyCode.O){
+               try {
+                    files.save("HighscoreList", hichscorelist);
+                } catch (FileNotFoundException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } 
             }
             
             //  Man sveiver inn duppen med denne knappen. 
