@@ -567,7 +567,7 @@ public class CanvasController implements Initializable {
             }
             
         }
-        if (keyEvent.getCode() == KeyCode.D || keyEvent.getCode() == KeyCode.A){
+        if (keyEvent.getCode() == RIGHT_KEY || keyEvent.getCode() == LEFT_KEY){
             timerBoat.stop();
         }
         if (keyEvent.getCode() == KeyCode.F){
