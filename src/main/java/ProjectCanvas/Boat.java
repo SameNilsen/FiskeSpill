@@ -26,6 +26,10 @@ public class Boat {
         this.image.setX(0);
     }
 
+    public ImageView getBoat() {
+        return this.image;
+    }
+
     public void moveBoat(Point2D newPos) {
         if (newPos.getX() < this.pos.getX()) {
             this.direction = false;

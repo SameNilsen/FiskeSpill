@@ -88,8 +88,12 @@ public class Fish {
         return this.speed;
     }
 
-    public int getPoint() {
-        return points.get(fishImages.indexOf(imageView.getImage()));
+    public double getSize() {
+        return 1 + (this.getFish().getFitWidth() + this.getFish().getFitHeight())*0.01;
+    }
+
+    public double getPoint() {
+        return points.get(fishImages.indexOf(imageView.getImage())) * this.getSize();
     }
 
     public void setAngle(double angle) {
@@ -166,6 +170,9 @@ public class Fish {
         if (this.getPosY() > 1000 || this.getPosY() < 500){
             this.angle = 360 - this.getAngle();
             //System.out.println("angleChange: " +this.getAngle());
+        }
+        if (this.getPosY() < 490){
+            return 505;
         }
         endring_y = Math.sin(Math.toRadians(this.getAngle()))*speed;
         return endring_y;
