@@ -12,10 +12,10 @@ import java.util.Scanner;
 public class FileHandling implements FileHandlingInterface{
 
     @Override
-    public void save(String filename, List<Integer> highscoreList) throws FileNotFoundException {
+    public void save(String filename, List<Double> highscoreList) throws FileNotFoundException {
         try (PrintWriter writer = new PrintWriter(new File(getFilePath(filename)))) {
             System.out.println("Lagrer liste :" + highscoreList);
-            for (Integer integer : highscoreList) {
+            for (Double integer : highscoreList) {
                 System.out.println("Tall: " + integer);
                 writer.println(integer);
             }
@@ -23,11 +23,11 @@ public class FileHandling implements FileHandlingInterface{
     }
 
     @Override
-    public List<Integer> load(String filename) throws FileNotFoundException {
-        List<Integer> list = new ArrayList<Integer>();
+    public List<Double> load(String filename) throws FileNotFoundException {
+        List<Double> list = new ArrayList<Double>();
         try (Scanner scanner = new Scanner(new File(getFilePath(filename)))) {
 			while(scanner.hasNextInt()){
-                list.add(scanner.nextInt());
+                list.add(scanner.nextDouble());
             }
 		}
         return list;
