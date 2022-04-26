@@ -94,9 +94,9 @@ public class CanvasController implements Initializable {
     private ImageView imageViewRod = new ImageView();
 
     @FXML
-    Image boatImage = new Image(getClass().getResourceAsStream("fishman.png"));
+    Image boatImage = new Image(getClass().getResourceAsStream("res/fishman.png"));
 
-    private Image fishinRodImage = new Image(getClass().getResourceAsStream("fishingRod.png"));
+    private Image fishinRodImage = new Image(getClass().getResourceAsStream("res/fishingRod.png"));
     private FishMain main;
 
     ArrayList<Fish> fishes = new ArrayList<Fish>();
@@ -153,7 +153,7 @@ public class CanvasController implements Initializable {
         }
         System.out.println("Highscore:" + variables.getHighscoreList());
         
-        Image img = new Image(getClass().getResourceAsStream("bckgrnd.png"));
+        Image img = new Image(getClass().getResourceAsStream("res/bckgrnd.png"));
         BackgroundImage bImg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background bGround = new Background(bImg);
         anchorPane.setBackground(bGround);

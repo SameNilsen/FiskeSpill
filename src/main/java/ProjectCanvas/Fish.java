@@ -38,9 +38,9 @@ public class Fish {
     private int timeTillSwitch;
     private boolean dir;
     private long startTime;
-    private Image fish1 = new Image(getClass().getResourceAsStream("fish1.png"));
-    private Image blueFish = new Image(getClass().getResourceAsStream("blueFish.png"));
-    private Image pinkFish = new Image(getClass().getResourceAsStream("pinkFish.png"));
+    private Image fish1 = new Image(getClass().getResourceAsStream("res/fish1.png"));
+    private Image blueFish = new Image(getClass().getResourceAsStream("res/blueFish.png"));
+    private Image pinkFish = new Image(getClass().getResourceAsStream("res/pinkFish.png"));
     private List<Image> fishImages = new ArrayList<Image>();
     private List<Integer> points = new ArrayList<Integer>();
     
