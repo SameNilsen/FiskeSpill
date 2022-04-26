@@ -35,6 +35,11 @@
                   <Font name="Bell MT" size="18.0" />
                </font>
             </Button>
+            <Button fx:id="highscoreButton" mnemonicParsing="false" onAction="#handleHigscoreButton" text="Highscore">
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font>
+            </Button>
             <Text fx:id="timerText" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer: 60">
                <font>
                   <Font name="Bell MT" size="21.0" />
@@ -46,10 +51,10 @@
             <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
       </HBox>
-      <AnchorPane fx:id="displayFisses" prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane fx:id="displayFisses" prefHeight="42.0" prefWidth="1477.0" />
       <ScrollPane fx:id="background" onMousePressed="#moveScreen" onMouseReleased="#stopScreen" prefWidth="1477.0">
          <content>
-            <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" onMouseMoved="#displayPosition" prefHeight="1000.0" prefWidth="1500.0">
+            <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="1000.0" prefWidth="1500.0">
                <children>
                   <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="315.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
                      <image>

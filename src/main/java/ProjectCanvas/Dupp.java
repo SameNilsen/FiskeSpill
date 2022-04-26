@@ -7,6 +7,8 @@ public class Dupp {
 
     Ellipse duppen;
     Point2D pos;
+    boolean duppMove = true;
+    boolean duppUte = false;
 
     public Dupp(Point2D pos) {
         this.duppen = new Ellipse(5, 5);
@@ -32,6 +34,20 @@ public class Dupp {
     public Ellipse getEllipse() {
         return this.duppen;
         
+    }
+
+    public boolean getDuppMove() {
+        return this.duppMove;
+    }
+    public void setDuppMove(boolean duppMove) {
+        this.duppMove = duppMove;
+    }
+
+    public boolean getDuppUte() {
+        return this.duppUte;
+    }
+    public void setDuppUte(boolean duppUte) {
+        this.duppUte = duppUte; 
     }
     
 }

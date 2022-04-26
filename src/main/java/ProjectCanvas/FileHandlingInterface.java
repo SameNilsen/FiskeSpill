@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface FileHandlingInterface {
 
-	public void save(String filename, List<Integer> highscoreList) throws FileNotFoundException;
+	public void save(String filename, List<Double> highscoreList) throws FileNotFoundException;
 
-	public List<Integer> load(String filename) throws FileNotFoundException;
+	public List<Double> load(String filename) throws FileNotFoundException;
 
 }
