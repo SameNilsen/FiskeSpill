@@ -5,17 +5,17 @@ import java.util.List;
 
 public class VariablesNshit {
 
-    double score = 0;
+    int score = 0;
     Fish caughtFiss = null;
     List<Fish> caughtFishesList = new ArrayList<Fish>();
     List<Fish> fishes = new ArrayList<Fish>();
-    List<Double> hichscorelist = new ArrayList<Double>();
+    List<Integer> hichscorelist = new ArrayList<Integer>();
 
 
-    public double getScore() {
+    public int getScore() {
         return this.score;
     }
-    public void setScore(double score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -43,10 +43,10 @@ public class VariablesNshit {
         this.fishes.add(fish);
     }
 
-    public List<Double> getHighscoreList() {
+    public List<Integer> getHighscoreList() {
         return this.hichscorelist;
     }
-    public void newHighscoreList(List<Double> newList) {
+    public void newHighscoreList(List<Integer> newList) {
         this.hichscorelist = newList;
     }
     

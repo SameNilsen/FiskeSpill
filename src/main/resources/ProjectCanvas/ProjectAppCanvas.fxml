@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -15,6 +16,16 @@
    <children>
       <HBox fx:id="topBox" prefHeight="0.0" prefWidth="1477.0">
          <children>
+            <Button fx:id="highscoreButton" mnemonicParsing="false" onAction="#handleHigscoreButton" text="Highscore">
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" text="Save">
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font>
+            </Button>
             <Button fx:id="displayFissButton" mnemonicParsing="false" onAction="#handleDisplayFissClick" text="DisplayFiss">
                <font>
                   <Font name="Bell MT" size="18.0" />
@@ -35,11 +46,6 @@
                   <Font name="Bell MT" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="highscoreButton" mnemonicParsing="false" onAction="#handleHigscoreButton" text="Highscore">
-               <font>
-                  <Font name="Bell MT" size="18.0" />
-               </font>
-            </Button>
             <Text fx:id="timerText" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer: 60">
                <font>
                   <Font name="Bell MT" size="21.0" />
@@ -54,15 +60,28 @@
       <AnchorPane fx:id="displayFisses" prefHeight="42.0" prefWidth="1477.0" />
       <ScrollPane fx:id="background" onMousePressed="#moveScreen" onMouseReleased="#stopScreen" prefWidth="1477.0">
          <content>
-            <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="1000.0" prefWidth="1500.0">
+            <StackPane>
                <children>
-                  <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="315.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../java/ProjectCanvas/boat2.png" />
-                     </image>
-                  </ImageView>
+                  <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="1000.0" prefWidth="1500.0">
+                     <children>
+                        <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="315.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../java/ProjectCanvas/boat2.png" />
+                           </image>
+                        </ImageView>
+                        <VBox fx:id="highscorePane" layoutX="364.0" layoutY="190.0" maxHeight="216.0" maxWidth="100.0" prefHeight="216.0" prefWidth="100.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore" textAlignment="CENTER" wrappingWidth="101.7529296875">
+                                 <font>
+                                    <Font name="Bell MT" size="18.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
+            </StackPane>
          </content>
       </ScrollPane>
    </children>

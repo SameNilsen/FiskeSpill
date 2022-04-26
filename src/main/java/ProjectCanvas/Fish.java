@@ -69,7 +69,7 @@ public class Fish {
         this.speed = rand.nextInt(1, 4);
 
         imageView.setImage(fishImages.get(rand.nextInt(fishImages.size())));
-        System.out.println(":::::::::"+fishImages.indexOf(imageView.getImage()));
+        System.out.println("::::Type:::::"+fishImages.indexOf(imageView.getImage()));
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(rand.nextInt(30, 60));
         imageView.setFitWidth(rand.nextInt(30, 80));
@@ -92,8 +92,8 @@ public class Fish {
         return 1 + (this.getFish().getFitWidth() + this.getFish().getFitHeight())*0.01;
     }
 
-    public double getPoint() {
-        return points.get(fishImages.indexOf(imageView.getImage())) * this.getSize();
+    public int getPoint() {
+        return (int) (points.get(fishImages.indexOf(imageView.getImage())) * this.getSize());
     }
 
     public void setAngle(double angle) {
