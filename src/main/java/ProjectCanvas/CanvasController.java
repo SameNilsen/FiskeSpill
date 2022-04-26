@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,6 +28,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -59,6 +61,9 @@ public class CanvasController implements Initializable {
     HBox topBox;
 
     @FXML
+    VBox highscorePane;
+
+    @FXML
     Button displayFissButton;
 
     @FXML
@@ -72,6 +77,9 @@ public class CanvasController implements Initializable {
 
     @FXML
     Button highscoreButton;
+
+    @FXML
+    Button saveButton;
 
     @FXML
     AnchorPane anchorPane;
@@ -166,6 +174,10 @@ public class CanvasController implements Initializable {
         movfissButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
         startButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;"); //  SetDisable...
         highscoreButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
+        saveButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
+        highscorePane.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
+
+        highscorePane.setVisible(false);
 
         //  Båt
         this.boat = new Boat(new Point2D(0, 10), boatImage, image);
@@ -191,7 +203,21 @@ public class CanvasController implements Initializable {
         
 
         //  En slik timer er forøvrig en type bakgrunnsprosess som gjør det mulig at flere ting skjer samtidig.
-        timerMain.startFocusTimer(anchorPane);
+        timerMain.startFocusTimer(anchorPane, highscorePane);
+
+        for (int i = 0; i < 10; i++) {
+
+            Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
+            variables.addToFishesList(fish2);
+            anchorPane.getChildren().add(fish2.getFish());   
+        }
+
+        timerMain.startFishMoveTimer(anchorPane, dupp, fishingrod, variables);
+
+        spawnFissButton.setDisable(true);
+        movfissButton.setDisable(true);
+        topBox.getChildren().remove(spawnFissButton);
+        topBox.getChildren().remove(movfissButton);
     }
 
     //  DUPP TIMER BESKRIVELSE:
@@ -215,14 +241,14 @@ public class CanvasController implements Initializable {
 
                     boat.direction = true;
                     fishingrod.moveRod(new Point2D(boat.getX()+440, fishingrod.getY()));
-                    timerMain.startBoatTimer(dupp, boat, image, background, fishingrod);;
+                    timerMain.startBoatTimer(dupp, boat, image, background, fishingrod, highscorePane);;
                 }
             }
             else if (e.getCode() == LEFT_KEY){
                 if (!dupp.getDuppUte()){
                     boat.direction = false;
                     fishingrod.moveRod(new Point2D(boat.getX()+465, fishingrod.getY()));
-                    timerMain.startBoatTimer(dupp, boat, image, background, fishingrod);
+                    timerMain.startBoatTimer(dupp, boat, image, background, fishingrod, highscorePane);
                 }
             }
             //  Når man trykker R roteres fiskestangen bakover.
@@ -243,7 +269,7 @@ public class CanvasController implements Initializable {
                 // System.out.println(dupp.localToScene(dupp.getBoundsInLocal()).getMaxY());
                 System.out.println("BoatX: "+boat.getX());
                 System.out.println("RodX: "+fishingrod.getX());
-                System.out.println(hichscorelist);
+                System.out.println(variables.getHighscoreList());
                 System.out.println(duppMove + " " + dupp.getDuppMove());
             }
 
@@ -381,8 +407,27 @@ public class CanvasController implements Initializable {
 
     @FXML
     private void handleHigscoreButton() {
-        Text text = new Text("Hello");
-        displayFisses.getChildren().add(text);
+        if (highscorePane.isVisible()){
+            highscorePane.setVisible(false);
+            Node title = highscorePane.getChildren().get(0);
+            highscorePane.getChildren().clear();
+            highscorePane.getChildren().add(title);
+        }
+        else{
+            highscorePane.setVisible(true);
+            for (Integer tall : variables.getHighscoreList()) {
+                highscorePane.getChildren().add(new Text(variables.getHighscoreList().indexOf(tall)+1+": "+tall));
+            }
+        }
+    }
+
+    @FXML
+    private void handleSaveButton() {
+        try {
+            files.save("HighscoreList", variables.getHighscoreList());
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } 
     }
 
     //  Når man klikker i nedre høyre/venstre del av skjermen.

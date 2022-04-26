@@ -6,12 +6,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
 public class FishMain {
 
     AnchorPane anchorPane;
+    VBox highscorePane;
     Dupp dupp;
     long startTime;
     Boat boat;
@@ -50,9 +52,11 @@ public class FishMain {
         public void handle(long currentNanoTime)
         {   
             anchorPane.requestFocus();
+            highscorePane.toFront();
         }
     };
-    public void startFocusTimer(AnchorPane anchorPane) {
+    public void startFocusTimer(AnchorPane anchorPane, VBox highscorePane) {
+        this.highscorePane = highscorePane;
         this.anchorPane = anchorPane;
         focusTimer.start();
     }
@@ -140,6 +144,8 @@ public class FishMain {
                     boat.moveBoat(new Point2D(boat.getX()+5, boat.getY()));
                     fishingrod.moveRod(new Point2D(fishingrod.getX()+5, fishingrod.getY()));
                     dupp.moveDupp(new Point2D(dupp.getX()+5, dupp.getY()));
+
+                    highscorePane.setLayoutX(highscorePane.getLayoutX()+5);
                     if (image.localToScene(image.getBoundsInLocal()).getMaxX() > 500){
                         background.setHvalue(background.getHvalue()+0.005);
                     }
@@ -148,6 +154,8 @@ public class FishMain {
                     boat.moveBoat(new Point2D(boat.getX()-5, boat.getY()));
                     fishingrod.moveRod(new Point2D(fishingrod.getX()-5, fishingrod.getY()));
                     dupp.moveDupp(new Point2D(dupp.getX()-5, dupp.getY()));
+
+                    highscorePane.setLayoutX(highscorePane.getLayoutX()-5);
                     if (image.localToScene(image.getBoundsInLocal()).getMinX() < 100){
                         background.setHvalue(background.getHvalue()-0.005);
                     }
@@ -168,12 +176,13 @@ public class FishMain {
         }
     };
 
-    public void startBoatTimer(Dupp dupp, Boat boat, ImageView image, ScrollPane background, FishingRod fishingrod) {
+    public void startBoatTimer(Dupp dupp, Boat boat, ImageView image, ScrollPane background, FishingRod fishingrod, VBox highscorePane) {
         this.dupp = dupp;
         this.boat = boat;
         this.image = image;
         this.background = background;
         this.fishingrod = fishingrod;
+        this.highscorePane = highscorePane;
         timerBoat.start();
     }
     public void stopBoatTimer() {
@@ -205,7 +214,6 @@ public class FishMain {
                 dupp.moveDupp(new Point2D(dest_x, dest_y));
                 timerDupp.stop();
 
-                System.out.println("HEIA");
                 dupp.setDuppMove(true);
 
                 duppUte = false;
@@ -275,7 +283,7 @@ public class FishMain {
                         fish.setAngle(-90-(alpha));
 
                         // IF-ELSE ER KANSKJE USELESS?
-                        
+
                         // }
                         // else{
                         //     double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
