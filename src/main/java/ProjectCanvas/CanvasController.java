@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.animation.AnimationTimer;
@@ -314,9 +315,29 @@ public class CanvasController implements Initializable {
         background.setHvalue(0.01);
         for (int i = 0; i < 10; i++) {
 
-            Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
-            variables.addToFishesList(fish2);
-            anchorPane.getChildren().add(fish2.getFish());   
+            int j = new Random().nextInt(3) + 1;
+
+            YellowFish yellowFish = null;
+            BlueFish blueFish = null;
+            PinkFish pinkFish = null;
+
+            if (j == 1) {
+                yellowFish = new YellowFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
+                variables.addToFishesList(yellowFish);
+                anchorPane.getChildren().add(yellowFish.getFish());   
+            }
+            else if (j == 2) {
+                blueFish = new BlueFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
+                variables.addToFishesList(blueFish);
+                anchorPane.getChildren().add(blueFish.getFish());   
+            }
+            else{
+                pinkFish = new PinkFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
+                variables.addToFishesList(blueFish);
+                anchorPane.getChildren().add(pinkFish.getFish());   
+            }
+            // YellowFish fish2 = new YellowFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
+            // anchorPane.getChildren().add(fish2.getFish());   
         }
     }
 

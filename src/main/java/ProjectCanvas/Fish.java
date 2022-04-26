@@ -38,7 +38,7 @@ public class Fish {
     private int timeTillSwitch;
     private boolean dir;
     private long startTime;
-    private Image fish1 = new Image(getClass().getResourceAsStream("res/fish1.png"));
+    private Image fish1 = new Image(getClass().getResourceAsStream("res/yellowFish.png"));
     private Image blueFish = new Image(getClass().getResourceAsStream("res/blueFish.png"));
     private Image pinkFish = new Image(getClass().getResourceAsStream("res/pinkFish.png"));
     private List<Image> fishImages = new ArrayList<Image>();
@@ -49,16 +49,15 @@ public class Fish {
     private double speed;
 
     public Fish(Point2D pos, Point2D size) {
-        fishImages.add(fish1);
-        fishImages.add(blueFish);
-        fishImages.add(pinkFish);
-        points.add(100);
-        points.add(300);
-        points.add(800);
+        // fishImages.add(fish1);
+        // fishImages.add(blueFish);
+        // fishImages.add(pinkFish);
+        // points.add(100);
+        // points.add(300);
+        // points.add(800);
 
         // this.fish = new Ellipse(pos.getX(), pos.getY(), size.getX(), size.getY());
-        double posX = pos.getX();
-        double posY = pos.getY();
+        
         this.angle = rand.nextInt(0, 360);
         if ((0 < angle && angle < 90) || (270 < angle && angle < 369)){
             this.dir = true;
@@ -68,13 +67,13 @@ public class Fish {
         }
         this.speed = rand.nextInt(1, 4);
 
-        imageView.setImage(fishImages.get(rand.nextInt(fishImages.size())));
-        System.out.println(":::::::::"+fishImages.indexOf(imageView.getImage()));
-        imageView.setPreserveRatio(true);
-        imageView.setFitHeight(rand.nextInt(30, 60));
-        imageView.setFitWidth(rand.nextInt(30, 80));
-        imageView.setY(posY);
-        imageView.setX(posX);
+        // imageView.setImage(fishImages.get(rand.nextInt(fishImages.size())));
+        // System.out.println(":::::::::"+fishImages.indexOf(imageView.getImage()));
+        // imageView.setPreserveRatio(true);
+        // imageView.setFitHeight(rand.nextInt(30, 60));
+        // imageView.setFitWidth(rand.nextInt(30, 80));
+        // imageView.setY(posY);
+        // imageView.setX(posX);
 
     }
 
@@ -93,7 +92,7 @@ public class Fish {
     }
 
     public double getPoint() {
-        return points.get(fishImages.indexOf(imageView.getImage())) * this.getSize();
+        return 0;
     }
 
     public void setAngle(double angle) {

@@ -263,28 +263,31 @@ public class FishMain {
 
                         //  MÅ ENDRES MELLOM HER ...
 
-                        if (dupp.getY() < fish.getPosY()){
-                            double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
-                            double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
-                            
-                            double alpha = 90 - Math.abs(Math.toDegrees(Math.atan(dy/dx)));
-                            if (dupp.getX() < fishingrod.getX()+80)
-                                alpha *= -1;
+                        // if (dupp.getY() < fish.getPosY()){
+                        double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
+                        double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
+                        
+                        double alpha = 90 - Math.abs(Math.toDegrees(Math.atan(dy/dx)));
+                        if (dupp.getX() < fishingrod.getX()+80)
+                            alpha *= -1;
 
-                            System.out.println(String.format("Vinkel: %f", alpha));
-                            fish.setAngle(-90-(alpha));
-                        }
-                        else{
-                            double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
-                            double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
+                        System.out.println(String.format("Vinkel: %f", alpha));
+                        fish.setAngle(-90-(alpha));
+
+                        // IF-ELSE ER KANSKJE USELESS?
+                        
+                        // }
+                        // else{
+                        //     double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
+                        //     double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
                             
-                            double alpha = 90 - Math.abs(Math.toDegrees(Math.atan(dy/dx)));
-                            if (dupp.getX() < fishingrod.getX()+80)
-                                alpha *= -1;
+                        //     double alpha = 90 - Math.abs(Math.toDegrees(Math.atan(dy/dx)));
+                        //     if (dupp.getX() < fishingrod.getX()+80)
+                        //         alpha *= -1;
                                 
-                            System.out.println(String.format("Vinkel: %f", alpha));
-                            fish.setAngle(-90-(alpha));
-                        }
+                        //     System.out.println(String.format("Vinkel: %f", alpha));
+                        //     fish.setAngle(-90-(alpha));
+                        // }
                         fish.setPos(new Point2D(dupp.getX(), dupp.getY()));
 
                         //  ... OG HER
