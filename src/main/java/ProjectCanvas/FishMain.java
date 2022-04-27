@@ -1,5 +1,7 @@
 package ProjectCanvas;
 
+import java.util.Random;
+
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
@@ -113,7 +115,8 @@ public class FishMain {
             line.setEndY(dupp.getY());
 
             if (variables.getCaughtFiss() != null){
-                variables.getCaughtFiss().setPos(new Point2D(dupp.getX(), dupp.getY()));
+                variables.getCaughtFiss().setPos(new Point2D(dupp.getX()-(variables.getCaughtFiss().getFish().getFitWidth()/2), dupp.getY()));
+                variables.getCaughtFiss().getFish().toFront();
             }
         }
     };
@@ -206,7 +209,25 @@ public class FishMain {
             dupp.moveDupp(new Point2D(dupp.getX() + (dest_x-dupp.getX())/100, dupp.getY() - Math.abs((dest_y-dupp.getY()))/100));
 
             if (variables.getCaughtFiss() != null){
-                variables.getCaughtFiss().setPos(new Point2D(dupp.getX(), dupp.getY()));
+                variables.getCaughtFiss().setPos(new Point2D(dupp.getX()-(variables.getCaughtFiss().getFish().getFitWidth()/2), dupp.getY()));
+                variables.getCaughtFiss().getFish().toFront();
+                double dx = 42;
+                if (boat.direction){
+                    dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
+                }
+                else{
+                    dx = Math.abs((fishingrod.getX())-dupp.getX());
+                }
+                double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
+                
+                double alpha = 90 - Math.abs(Math.toDegrees(Math.atan(dy/dx)));
+                if (dupp.getX() < fishingrod.getX()+80){
+                    alpha *= -1;
+                }
+
+                System.out.println(String.format("Vinkel: %f", alpha));
+                variables.getCaughtFiss().setAngle(-90-(alpha));
+                variables.getCaughtFiss().getFish().setRotate(variables.getCaughtFiss().getAngle());
 
             }
 
@@ -261,27 +282,62 @@ public class FishMain {
         {
             public void handle(long currentNanoTime)
             {   
-                if (variables.getFishesList().size() < 10){
-                    Fish fish2 = new Fish(new Point2D(100, 700));
-                    variables.addToFishesList(fish2);
-                    anchorPane.getChildren().add(fish2.getFish()); 
+                if (variables.getFishesList().size() < 15){
+                    System.out.println("NEW FISH COMING");
+                    int j = new Random().nextInt(3) + 1;
+
+                    YellowFish yellowFish = null;
+                    BlueFish blueFish = null;
+                    PinkFish pinkFish = null;
+                    if (j == 1) {
+                        yellowFish = new YellowFish(new Point2D(100,700));
+                        variables.addToFishesList(yellowFish);
+            
+                        anchorPane.getChildren().add(yellowFish.getFish());   
+                    }
+                    else if (j == 2) {
+                        blueFish = new BlueFish(new Point2D(100,700));
+                        variables.addToFishesList(blueFish);
+                        anchorPane.getChildren().add(blueFish.getFish());   
+                    }
+                    else{
+                        pinkFish = new PinkFish(new Point2D(100,700));
+                        variables.addToFishesList(pinkFish);
+                        // System.out.println(pinkFish.getPosX());
+                        anchorPane.getChildren().add(pinkFish.getFish());   
+                    }
                 }
                 for (Fish fish : variables.getFishesList()) {
-                    if ((Math.abs(dupp.getX()-fish.getPosX()) <= 50) && (Math.abs(dupp.getY()-fish.getPosY()) <= 50) && dupp.getDuppMove() == false && variables.getCaughtFiss() == null && fish.getPosY() > 550){
-                        fish.setPos(new Point2D(fish.getPosX() + (dupp.getX()-fish.getPosX())/50, fish.getPosY() - Math.abs((dupp.getY()-fish.getPosY()))/50));
-
-                        //  MÅ ENDRES MELLOM HER ...
-
-                        // if (dupp.getY() < fish.getPosY()){
-                        double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
-                        double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
+                    if ((Math.abs(dupp.getX()-fish.getPosX()) <= 100) && (Math.abs(dupp.getY()-fish.getPosY()) <= 100) && dupp.getDuppMove() == false && variables.getCaughtFiss() == null && fish.getPosY() > 550){
+                        fish.setPos(new Point2D(fish.getPosX() + (dupp.getX()-fish.getPosX())/50, fish.getPosY() + (dupp.getY()-fish.getPosY())/50));
+                        double dx = Math.abs((fish.getPosX())-dupp.getX());
+                        double dy = Math.abs(dupp.getY()-(fish.getPosY()));
                         
                         double alpha = 90 - Math.abs(Math.toDegrees(Math.atan(dy/dx)));
                         if (dupp.getX() < fishingrod.getX()+80)
                             alpha *= -1;
 
-                        System.out.println(String.format("Vinkel: %f", alpha));
+                        if (dupp.getY() > fish.getPosY()){
+                            alpha += 180;
+                        }
+
+                        // System.out.println(String.format("Vinkel: %f", alpha));
                         fish.setAngle(-90-(alpha));
+                        fish.getFish().setRotate(fish.getAngle());
+
+                        //  MÅ ENDRES MELLOM HER ...
+
+                        // if (dupp.getY() < fish.getPosY()){
+
+                        // double dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
+                        // double dy = Math.abs(dupp.getY()-(fishingrod.getY()-25));
+                        
+                        // double alpha = 90 - Math.abs(Math.toDegrees(Math.atan(dy/dx)));
+                        // if (dupp.getX() < fishingrod.getX()+80)
+                        //     alpha *= -1;
+
+                        // System.out.println(String.format("Vinkel: %f", alpha));
+                        // fish.setAngle(-90-(alpha));
 
                         // IF-ELSE ER KANSKJE USELESS?
 
@@ -297,16 +353,20 @@ public class FishMain {
                         //     System.out.println(String.format("Vinkel: %f", alpha));
                         //     fish.setAngle(-90-(alpha));
                         // }
-                        fish.setPos(new Point2D(dupp.getX(), dupp.getY()));
+
+                        // fish.setPos(new Point2D(dupp.getX(), dupp.getY()));
 
                         //  ... OG HER
                     }
                     else{
                         fish.setPos(new Point2D(fish.getPosX()+fish.calculateNextX(), fish.getPosY()+fish.calculateNextY()));
                     }
+                    // if (fish.getPosY() < 550)
+                    // System.out.println(fish.getPosY());
                     fish.getFish().setRotate(fish.getAngle());   
                     if ((Math.abs(dupp.getX()-fish.getPosX()) <= 10) && (Math.abs(dupp.getY()-fish.getPosY()) <= 10) && dupp.getDuppMove() == false && variables.getCaughtFiss() == null){
                         System.out.println("FISK");
+                        fish.setPos(new Point2D(dupp.getX(), dupp.getY()));
                         variables.getFishesList().remove(fish);
                         variables.setCaughtFiss(fish);
                         break;

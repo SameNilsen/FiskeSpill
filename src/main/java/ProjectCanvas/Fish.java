@@ -176,6 +176,18 @@ public class Fish {
                 this.imageView.setScaleY(1);
                 this.dir = true;
             }
+            if (this.getPosX() < -3){
+                System.out.println("GÅ TIL HØYRE");
+                System.out.println(this.getFish().getX() + "Speed:"+ this.getSpeed());
+                // this.getFish().setX(100);
+                return 20;
+            }
+            if (this.getPosX() > 1503){
+                System.out.println("GÅ TIL VENSTRE");
+                System.out.println(this.getFish().getX() + "Speed:"+ this.getSpeed());
+                // this.getFish().setX(1400);
+                return -20;
+            }
         }
         endring_x = Math.cos(Math.toRadians(this.getAngle()))*speed;
         return endring_x;
@@ -185,8 +197,17 @@ public class Fish {
         if (this.getPosY() > 1000 || this.getPosY() < 500){
             this.angle = 360 - this.getAngle();
         }
-        if (this.getPosY() < 490){
-            return 505;
+        if (this.getPosY() < 497){
+            System.out.println("GÅ NED");
+            System.out.println(this.getFish().getY() + "Speed:"+ this.getSpeed());
+            // this.getFish().setY(600);
+            return 20;
+        }
+        if (this.getPosY() > 1003){
+            System.out.println("GÅ OPP");
+            System.out.println(this.getFish().getY() + "Speed:"+ this.getSpeed());
+            // this.getFish().setY(900);
+            return -20;
         }
         endring_y = Math.sin(Math.toRadians(this.getAngle()))*speed;
         return endring_y;
