@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 
-// import static ProjectCanvas.Constants.RIGHT_KEY;
+
 import static ProjectCanvas.Constants.*;
 
 
@@ -204,7 +204,8 @@ public class CanvasController implements Initializable {
 
         //  En slik timer er forøvrig en type bakgrunnsprosess som gjør det mulig at flere ting skjer samtidig.
         timerMain.startFocusTimer(anchorPane, highscorePane);
-
+        Fish t = new Fish(new Point2D(3,2));
+        // System.out.println(t.test().getPoint());
         for (int i = 0; i < 1; i++) {
 
             // Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));

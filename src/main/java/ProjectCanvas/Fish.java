@@ -195,4 +195,34 @@ public class Fish {
         this.imageView.setX(pos.getX());
         this.imageView.setY(pos.getY());
     }
+    // public Fish generateFish(int numbersOfFish) {
+    //     for (int i = 0; i < 1; i++) {
+
+    //         // Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
+    //         // variables.addToFishesList(fish2);
+    //         // anchorPane.getChildren().add(fish2.getFish());   
+    //         int j = new Random().nextInt(3) + 1;
+
+    //         YellowFish yellowFish = null;
+    //         BlueFish blueFish = null;
+    //         PinkFish pinkFish = null;
+    //         if (j == 1) {
+    //             yellowFish = new YellowFish(new Point2D(100+i*2,510 + i*50));
+    //             variables.addToFishesList(yellowFish);
+      
+    //             anchorPane.getChildren().add(yellowFish.getFish());   
+    //         }
+    //         else if (j == 2) {
+    //             blueFish = new BlueFish(new Point2D(100+i*2,510 + i*50));
+    //             variables.addToFishesList(blueFish);
+    //             anchorPane.getChildren().add(blueFish.getFish());   
+    //         }
+    //         else{
+    //             pinkFish = new PinkFish(new Point2D(100+i*2,510 + i*50));
+    //             variables.addToFishesList(pinkFish);
+    //             // System.out.println(pinkFish.getPosX());
+    //             anchorPane.getChildren().add(pinkFish.getFish());   
+    //         }
+    //     }
+    // }
 }

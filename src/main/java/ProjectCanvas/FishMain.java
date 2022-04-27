@@ -48,6 +48,7 @@ public class FishMain {
         return dir;
     }
     
+    
     //  -------------------------------------------------------- Focus Timer --------------------------------------------------------
     AnimationTimer focusTimer = new AnimationTimer()
     {
