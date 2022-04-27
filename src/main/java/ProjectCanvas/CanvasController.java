@@ -175,7 +175,7 @@ public class CanvasController implements Initializable {
         startButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;"); //  SetDisable...
         highscoreButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
         saveButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
-        highscorePane.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
+        highscorePane.setStyle("-fx-background-color: #FAE494;-fx-border-color:black;");
 
         highscorePane.setVisible(false);
 
@@ -205,7 +205,7 @@ public class CanvasController implements Initializable {
         //  En slik timer er forøvrig en type bakgrunnsprosess som gjør det mulig at flere ting skjer samtidig.
         timerMain.startFocusTimer(anchorPane, highscorePane);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
 
             // Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
             // variables.addToFishesList(fish2);
@@ -411,6 +411,8 @@ public class CanvasController implements Initializable {
             highscorePane.getChildren().add(title);
         }
         else{
+            background.setHvalue(0.5);
+            background.setVvalue(0.5);
             highscorePane.setVisible(true);
             for (Integer tall : variables.getHighscoreList()) {
                 highscorePane.getChildren().add(new Text(variables.getHighscoreList().indexOf(tall)+1+": "+tall));
