@@ -74,7 +74,7 @@ public class FishMain {
             if (dupp.getDuppMove()){
                 if (dupp.getY() < anchorPane.getHeight()-100){
                     double time = (currentNanoTime-startTime)*Math.pow(10, -9)*6;
-                    if (boat.direction){
+                    if (boat.getDirection()){
                         dupp.moveDupp(new Point2D(image.getX()+465+(50 * Math.cos(Math.toRadians(30)) * time), 390+((50 * Math.sin(Math.toRadians(30)) * time) - (0.5 * 9.81 * Math.pow(time, 2)))*-1));
                     }
                     else{
@@ -103,7 +103,7 @@ public class FishMain {
                     dupp.moveDupp(new Point2D(dupp.getX(), dupp.getY()+1));
                 }
             }
-            if (boat.direction){
+            if (boat.getDirection()){
                 line.setStartX(fishingrod.getX()+80);
                 line.setStartY(fishingrod.getY()-50);
             }
@@ -143,7 +143,7 @@ public class FishMain {
         public void handle(long currentNanoTime)
         {   
             if (fishingrod.getX() < 1500 && fishingrod.getX() > 0){
-                if (boat.direction == true){
+                if (boat.getDirection() == true){
                     boat.moveBoat(new Point2D(boat.getX()+5, boat.getY()));
                     fishingrod.moveRod(new Point2D(fishingrod.getX()+5, fishingrod.getY()));
                     dupp.moveDupp(new Point2D(dupp.getX()+5, dupp.getY()));
@@ -196,7 +196,7 @@ public class FishMain {
         public void handle(long currentNanoTime)
         {  
             //  BEREGN AVSTAND
-            if (boat.direction){
+            if (boat.getDirection()){
                 dest_x = fishingrod.getX()+80;
                 dest_y = (fishingrod.getY()-25);
             }
@@ -210,7 +210,7 @@ public class FishMain {
                 variables.getCaughtFiss().setPos(new Point2D(dupp.getX()-(variables.getCaughtFiss().getFish().getFitWidth()/2), dupp.getY()));
                 variables.getCaughtFiss().getFish().toFront();
                 double dx = 42;
-                if (boat.direction){
+                if (boat.getDirection()){
                     dx = Math.abs((fishingrod.getX()+80)-dupp.getX());
                 }
                 else{
@@ -247,7 +247,7 @@ public class FishMain {
                     variables.setCaughtFiss(null);
                 }
             }
-            if (boat.direction){
+            if (boat.getDirection()){
                 line.setStartX(fishingrod.getX()+80);
                 line.setStartY(fishingrod.getY()-50);
             }

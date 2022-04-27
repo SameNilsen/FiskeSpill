@@ -7,12 +7,12 @@ import javafx.scene.image.ImageView;
 public class Boat {
     
     // Image boatImage = new Image(getClass().getResourceAsStream("boat2.png"));
-    ImageView image;
-    Point2D pos;
+    private ImageView image;
+    private Point2D pos;
 
     // True - Right
     // False - Left
-    Boolean direction = true;
+    private Boolean direction = true;
 
 
     public Boat(Point2D pos, Image boatImage, ImageView image) {
@@ -22,8 +22,8 @@ public class Boat {
         this.image.setPreserveRatio(true);
         this.image.setFitHeight(350);
         this.image.setFitWidth(350);
-        this.image.setY(-60);
-        this.image.setX(0);
+        this.image.setY(this.pos.getY());
+        this.image.setX(this.pos.getX());
     }
 
     public ImageView getBoat() {
@@ -32,11 +32,11 @@ public class Boat {
 
     public void moveBoat(Point2D newPos) {
         if (newPos.getX() < this.pos.getX()) {
-            this.direction = false;
+            this.setDirection(false);
             this.image.setScaleX(-1);
         }
         else {
-            this.direction = true;  
+            this.setDirection(true);
             this.image.setScaleX(1);
         }
         this.pos = newPos;
@@ -50,6 +50,13 @@ public class Boat {
         return this.pos.getY();
     }
 
+    public boolean getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(boolean direction) {
+        this.direction = direction;
+    }
 
 
 }

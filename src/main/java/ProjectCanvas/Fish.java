@@ -38,16 +38,10 @@ public class Fish {
     private int timeTillSwitch;
     private boolean dir;
     private long startTime;
-    // private Image fish1 = new Image(getClass().getResourceAsStream("res/yellowFish.png"));
-    // private Image blueFish = new Image(getClass().getResourceAsStream("res/blueFish.png"));
-    // private Image pinkFish = new Image(getClass().getResourceAsStream("res/pinkFish.png"));
-    private List<Image> fishImages = new ArrayList<Image>();
-    private List<Integer> points = new ArrayList<Integer>();
     
     Random rand = new Random();
     private double angle;
     private double speed;
-    private Point2D size;
     private Point2D pos;
 
     public Fish(Point2D pos) {

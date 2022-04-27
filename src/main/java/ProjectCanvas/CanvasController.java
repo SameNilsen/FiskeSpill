@@ -180,7 +180,7 @@ public class CanvasController implements Initializable {
         highscorePane.setVisible(false);
 
         //  Båt
-        this.boat = new Boat(new Point2D(0, 10), boatImage, image);
+        this.boat = new Boat(new Point2D(0, -60), boatImage, image);
 
         this.fishingrod = new FishingRod(new Point2D(410, 435), fishinRodImage, imageViewRod);
         anchorPane.getChildren().add(imageViewRod);
@@ -261,14 +261,14 @@ public class CanvasController implements Initializable {
             if (e.getCode() == RIGHT_KEY){
                 if (!dupp.getDuppUte()){
 
-                    boat.direction = true;
+                    boat.setDirection(true);;
                     fishingrod.moveRod(new Point2D(boat.getX()+440, fishingrod.getY()));
                     timerMain.startBoatTimer(dupp, boat, image, background, fishingrod, highscorePane);;
                 }
             }
             else if (e.getCode() == LEFT_KEY){
                 if (!dupp.getDuppUte()){
-                    boat.direction = false;
+                    boat.setDirection(false);
                     fishingrod.moveRod(new Point2D(boat.getX()+465, fishingrod.getY()));
                     timerMain.startBoatTimer(dupp, boat, image, background, fishingrod, highscorePane);
                 }
@@ -276,7 +276,7 @@ public class CanvasController implements Initializable {
             //  Når man trykker R roteres fiskestangen bakover.
             if (e.getCode() == KeyCode.R){
                 if (!dupp.getDuppUte()){
-                    if (boat.direction){
+                    if (boat.getDirection()){
                         imageViewRod.setRotate(imageViewRod.getRotate()-1);
                     }
                     else{

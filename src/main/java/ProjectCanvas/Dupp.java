@@ -5,10 +5,10 @@ import javafx.scene.shape.Ellipse;
 
 public class Dupp {
 
-    Ellipse duppen;
-    Point2D pos;
-    boolean duppMove = true;
-    boolean duppUte = false;
+    private Ellipse duppen;
+    private Point2D pos;
+    private boolean duppMove = true;
+    private boolean duppUte = false;
 
     public Dupp(Point2D pos) {
         this.duppen = new Ellipse(5, 5);
