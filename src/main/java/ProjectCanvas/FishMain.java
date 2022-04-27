@@ -262,7 +262,7 @@ public class FishMain {
             public void handle(long currentNanoTime)
             {   
                 if (variables.getFishesList().size() < 10){
-                    Fish fish2 = new Fish(new Point2D(100, 700), new Point2D(30, 10));
+                    Fish fish2 = new Fish(new Point2D(100, 700));
                     variables.addToFishesList(fish2);
                     anchorPane.getChildren().add(fish2.getFish()); 
                 }

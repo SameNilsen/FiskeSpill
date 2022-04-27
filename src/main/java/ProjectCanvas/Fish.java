@@ -38,17 +38,27 @@ public class Fish {
     private int timeTillSwitch;
     private boolean dir;
     private long startTime;
-    private Image fish1 = new Image(getClass().getResourceAsStream("res/yellowFish.png"));
-    private Image blueFish = new Image(getClass().getResourceAsStream("res/blueFish.png"));
-    private Image pinkFish = new Image(getClass().getResourceAsStream("res/pinkFish.png"));
+    // private Image fish1 = new Image(getClass().getResourceAsStream("res/yellowFish.png"));
+    // private Image blueFish = new Image(getClass().getResourceAsStream("res/blueFish.png"));
+    // private Image pinkFish = new Image(getClass().getResourceAsStream("res/pinkFish.png"));
     private List<Image> fishImages = new ArrayList<Image>();
     private List<Integer> points = new ArrayList<Integer>();
     
     Random rand = new Random();
     private double angle;
     private double speed;
+    private Point2D size;
+    private Point2D pos;
 
-    public Fish(Point2D pos, Point2D size) {
+    public Fish(Point2D pos) {
+        this.pos = pos;
+        // this.imageView.setImage(img);
+
+        // // System.out.println(":::::::::"+fishImages.indexOf(imageView.getImage()));
+        // this.imageView.setPreserveRatio(true);
+        // this.imageView.setFitHeight(rand.nextInt(30, 60));
+        // this.imageView.setY(this.pos.getY());
+        // this.imageView.setX(this.pos.getX());
         // fishImages.add(fish1);
         // fishImages.add(blueFish);
         // fishImages.add(pinkFish);
@@ -77,14 +87,22 @@ public class Fish {
 
     }
 
+    public void setImageView(Image img) {
+        this.imageView.setImage(img);
+        this.imageView.setPreserveRatio(true);
+        imageView.setFitHeight(rand.nextInt(30, 60));
+        imageView.setFitWidth(rand.nextInt(30, 80));
+        this.imageView.setY(this.pos.getY());
+        this.imageView.setX(this.pos.getX());
+    }
 
     public ImageView getFish() {
         // return this.fish;
-        return this.imageView;
+        return imageView;
     }
 
     public double getSpeed() {
-        return this.speed;
+        return speed;
     }
 
     public double getSize() {
@@ -136,17 +154,15 @@ public class Fish {
             // }
         }
 
-        return this.angle;
+        return angle;
     }
 
     public double getPosX() {
-        // return this.fish.getCenterX();
-        return this.imageView.getX();
+        return imageView.getX();
     }
 
     public double getPosY() {
-        // return this.fish.getCenterY();
-        return this.imageView.getY();
+        return imageView.getY();
     }
 
     public double calculateNextX() {
@@ -168,7 +184,6 @@ public class Fish {
     public double calculateNextY() {
         if (this.getPosY() > 1000 || this.getPosY() < 500){
             this.angle = 360 - this.getAngle();
-            //System.out.println("angleChange: " +this.getAngle());
         }
         if (this.getPosY() < 490){
             return 505;
@@ -178,8 +193,6 @@ public class Fish {
     }
 
     public void setPos(Point2D pos) {
-        // fish.setCenterX(pos_x);
-        // fish.setCenterY(pos_y);
         this.imageView.setX(pos.getX());
         this.imageView.setY(pos.getY());
     }
