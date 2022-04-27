@@ -207,6 +207,7 @@ public class FishMain {
 
             if (variables.getCaughtFiss() != null){
                 variables.getCaughtFiss().setPos(new Point2D(dupp.getX(), dupp.getY()));
+
             }
 
             if ((Math.abs(dupp.getX()-dest_x) <= 50) && (Math.abs(dupp.getY()-dest_y) <= 50)){
