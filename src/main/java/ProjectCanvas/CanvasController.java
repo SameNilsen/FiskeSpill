@@ -216,18 +216,18 @@ public class CanvasController implements Initializable {
             BlueFish blueFish = null;
             PinkFish pinkFish = null;
             if (j == 1) {
-                yellowFish = new YellowFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
+                yellowFish = new YellowFish(new Point2D(100+i*2,510 + i*50));
                 variables.addToFishesList(yellowFish);
       
                 anchorPane.getChildren().add(yellowFish.getFish());   
             }
             else if (j == 2) {
-                blueFish = new BlueFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
+                blueFish = new BlueFish(new Point2D(100+i*2,510 + i*50));
                 variables.addToFishesList(blueFish);
                 anchorPane.getChildren().add(blueFish.getFish());   
             }
             else{
-                pinkFish = new PinkFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
+                pinkFish = new PinkFish(new Point2D(100+i*2,510 + i*50));
                 variables.addToFishesList(pinkFish);
                 // System.out.println(pinkFish.getPosX());
                 anchorPane.getChildren().add(pinkFish.getFish());   
@@ -360,33 +360,8 @@ public class CanvasController implements Initializable {
         System.out.println(background.getHvalue());
         background.setHbarPolicy(ScrollBarPolicy.NEVER);
         background.setVbarPolicy(ScrollBarPolicy.NEVER);
-        background.setHvalue(0.01);
-        for (int i = 0; i < 10; i++) {
-
-            int j = new Random().nextInt(3) + 1;
-
-            YellowFish yellowFish = null;
-            BlueFish blueFish = null;
-            PinkFish pinkFish = null;
-            if (j == 1) {
-                yellowFish = new YellowFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
-                variables.addToFishesList(yellowFish);
-                anchorPane.getChildren().add(yellowFish.getFish());   
-            }
-            else if (j == 2) {
-                blueFish = new BlueFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
-                variables.addToFishesList(blueFish);
-                anchorPane.getChildren().add(blueFish.getFish());   
-            }
-            else{
-                pinkFish = new PinkFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
-                variables.addToFishesList(pinkFish);
-                System.out.println(pinkFish.getFish());
-                anchorPane.getChildren().add(pinkFish.getFish());   
-            }
-            // YellowFish fish2 = new YellowFish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
-            // anchorPane.getChildren().add(fish2.getFish());   
-        }
+        background.setHvalue(0.01); 
+        
     }
 
 

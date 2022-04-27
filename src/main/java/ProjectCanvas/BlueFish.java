@@ -8,12 +8,12 @@ public class BlueFish extends Fish{
 
     private Image blueFish = new Image(getClass().getResourceAsStream("res/blueFish.png"));
 
-    public BlueFish(Point2D pos, Point2D size) {
-        super(pos, size);
+    public BlueFish(Point2D pos) {
+        super(pos);
         super.setImageView(blueFish);
     }
 
     public double getPoint(){
-        return 200;
+        return ((this.getFish().getFitHeight()+this.getFish().getFitWidth()) * 0.01 + 1) * 300;
     }
 }

@@ -50,9 +50,8 @@ public class Fish {
     private Point2D size;
     private Point2D pos;
 
-    public Fish(Point2D pos, Point2D size) {
+    public Fish(Point2D pos) {
         this.pos = pos;
-        this.size = size;
         // this.imageView.setImage(img);
 
         // // System.out.println(":::::::::"+fishImages.indexOf(imageView.getImage()));
