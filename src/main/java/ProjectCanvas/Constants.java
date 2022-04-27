@@ -15,5 +15,6 @@ public final class Constants {
     // KEYCODES
     public static final KeyCode RIGHT_KEY = KeyCode.D;
     public static final KeyCode LEFT_KEY = KeyCode.A;
-
+    public static final KeyCode THROW = KeyCode.R;
+    public static final KeyCode REEL_IN = KeyCode.F;
 }

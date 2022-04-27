@@ -36,8 +36,8 @@ import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 
-import static ProjectCanvas.Constants.RIGHT_KEY;
-import static ProjectCanvas.Constants.LEFT_KEY;
+// import static ProjectCanvas.Constants.RIGHT_KEY;
+import static ProjectCanvas.Constants.*;
 
 
 //        Tastene:
@@ -274,7 +274,7 @@ public class CanvasController implements Initializable {
                 }
             }
             //  Når man trykker R roteres fiskestangen bakover.
-            if (e.getCode() == KeyCode.R){
+            if (e.getCode() == THROW){
                 if (!dupp.getDuppUte()){
                     if (boat.getDirection()){
                         imageViewRod.setRotate(imageViewRod.getRotate()-1);
@@ -304,7 +304,7 @@ public class CanvasController implements Initializable {
             }
             
             //  Man sveiver inn duppen med denne knappen. 
-            if (e.getCode() == KeyCode.F){
+            if (e.getCode() == REEL_IN){
                 if (dupp.getDuppMove() == false){
                     timerMain.stopDuppTimer();
 
@@ -317,7 +317,7 @@ public class CanvasController implements Initializable {
     //  Når man slipper tastene må de ulike animasjonene avsluttes. Dette skjer her.
     @FXML
     private void handleKeyReleased(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.R){
+        if (keyEvent.getCode() == THROW){
             if (!dupp.getDuppUte()){
                 anchorPane.getChildren().add(dupp.getEllipse());
                 imageViewRod.setRotate(0);
@@ -336,7 +336,7 @@ public class CanvasController implements Initializable {
         if (keyEvent.getCode() == RIGHT_KEY || keyEvent.getCode() == LEFT_KEY){
             timerMain.stopBoatTimer();
         }
-        if (keyEvent.getCode() == KeyCode.F){
+        if (keyEvent.getCode() == REEL_IN){
             if (dupp.getDuppMove() == false){
                 timerMain.startDuppTimer(anchorPane, dupp, duppMove, startTime, boat, image, background, line, fishingrod, caughtFiss, variables);
             }

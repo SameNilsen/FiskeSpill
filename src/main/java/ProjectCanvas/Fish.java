@@ -46,22 +46,6 @@ public class Fish {
 
     public Fish(Point2D pos) {
         this.pos = pos;
-        // this.imageView.setImage(img);
-
-        // // System.out.println(":::::::::"+fishImages.indexOf(imageView.getImage()));
-        // this.imageView.setPreserveRatio(true);
-        // this.imageView.setFitHeight(rand.nextInt(30, 60));
-        // this.imageView.setY(this.pos.getY());
-        // this.imageView.setX(this.pos.getX());
-        // fishImages.add(fish1);
-        // fishImages.add(blueFish);
-        // fishImages.add(pinkFish);
-        // points.add(100);
-        // points.add(300);
-        // points.add(800);
-
-        // this.fish = new Ellipse(pos.getX(), pos.getY(), size.getX(), size.getY());
-        
         this.angle = rand.nextInt(0, 360);
         if ((0 < angle && angle < 90) || (270 < angle && angle < 369)){
             this.dir = true;

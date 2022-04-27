@@ -8,15 +8,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import ProjectCanvas.Fish;
+import ProjectCanvas.YellowFish;
 import javafx.geometry.Point2D;
 
 public class FishTest {
     
-    private Fish fish;
+    private YellowFish fish;
 
     @BeforeEach
     public void setup() {
-        fish = new Fish(new Point2D(100, 200));
+        fish = new YellowFish(new Point2D(100, 200));
     }
 
     @Test
