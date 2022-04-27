@@ -18,7 +18,7 @@ public class FishTest {
 
     @BeforeEach
     public void setup() {
-        fish = new Fish(new Point2D(100, 200), new Point2D(30, 60));
+        fish = new Fish(new Point2D(100, 200));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class FishTest {
     @Test
     @DisplayName("Test at posisjonen endres om den når kanten")
     public void testCalculate() {
-        Fish fish2 = new Fish(new Point2D(1499, 600), new Point2D(30, 60));
+        Fish fish2 = new Fish(new Point2D(1499, 600));
         fish2.setAngle(0);
         fish2.calculateNextX();
         double a = fish2.getAngle();
