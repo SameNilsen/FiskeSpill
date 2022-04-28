@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -202,33 +201,8 @@ public class CanvasController implements Initializable {
         //  En slik timer er forøvrig en type bakgrunnsprosess som gjør det mulig at flere ting skjer samtidig.
         timerMain.startFocusTimer(anchorPane, highscorePane);
         // System.out.println(t.test().getPoint());
-        for (int i = 0; i < 1; i++) {
-
-            // Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));
-            // variables.addToFishesList(fish2);
-            // anchorPane.getChildren().add(fish2.getFish());   
-            int j = new Random().nextInt(3) + 1;
-
-            YellowFish yellowFish = null;
-            BlueFish blueFish = null;
-            PinkFish pinkFish = null;
-            if (j == 1) {
-                yellowFish = new YellowFish(new Point2D(100+i*2,510 + i*50));
-                variables.addToFishesList(yellowFish);
-                anchorPane.getChildren().add(yellowFish.getFish());   
-            }
-            else if (j == 2) {
-                blueFish = new BlueFish(new Point2D(100+i*2,510 + i*50));
-                variables.addToFishesList(blueFish);
-                anchorPane.getChildren().add(blueFish.getFish());   
-            }
-            else{
-                pinkFish = new PinkFish(new Point2D(100+i*2,510 + i*50));
-                variables.addToFishesList(pinkFish);
-                anchorPane.getChildren().add(pinkFish.getFish());   
-            }
-        }
-
+        Fish fish = new Fish(null);
+        fish.generateFish(10, variables, anchorPane);
         timerMain.startFishMoveTimer(anchorPane, dupp, fishingrod, variables);
 
         spawnFissButton.setDisable(true);
@@ -253,42 +227,41 @@ public class CanvasController implements Initializable {
     @FXML
     private void handleKeyPressed(KeyEvent keyEvent) {
         background.setOnKeyPressed((KeyEvent e) -> {
-            if (e.getCode() == RIGHT_KEY){
-                if (!dupp.getDuppUte()){
+            if (!dupp.getDuppUte()){
+                switch (e.getCode()) {
+                    case D:
+                        boat.setDirection(true);;
+                        fishingrod.moveRod(new Point2D(boat.getX()+440, fishingrod.getY()));
+                        timerMain.startBoatTimer(dupp, boat, image, background, fishingrod, highscorePane);
+                        break;
+                    
+                    case A:
+                        boat.setDirection(false);
+                        fishingrod.moveRod(new Point2D(boat.getX()+465, fishingrod.getY()));
+                        timerMain.startBoatTimer(dupp, boat, image, background, fishingrod, highscorePane); 
+                        break;
 
-                    boat.setDirection(true);;
-                    fishingrod.moveRod(new Point2D(boat.getX()+440, fishingrod.getY()));
-                    timerMain.startBoatTimer(dupp, boat, image, background, fishingrod, highscorePane);;
+                    case R:
+                        if (boat.getDirection()){
+                            imageViewRod.setRotate(imageViewRod.getRotate()-1);
+                        }
+                        else{
+                            imageViewRod.setRotate(imageViewRod.getRotate()+1);
+                        }
+                    default:
+                        break;
                 }
             }
-            else if (e.getCode() == LEFT_KEY){
-                if (!dupp.getDuppUte()){
-                    boat.setDirection(false);
-                    fishingrod.moveRod(new Point2D(boat.getX()+465, fishingrod.getY()));
-                    timerMain.startBoatTimer(dupp, boat, image, background, fishingrod, highscorePane);
-                }
-            }
-            //  Når man trykker R roteres fiskestangen bakover.
-            if (e.getCode() == THROW){
-                if (!dupp.getDuppUte()){
-                    if (boat.getDirection()){
-                        imageViewRod.setRotate(imageViewRod.getRotate()-1);
-                    }
-                    else{
-                        imageViewRod.setRotate(imageViewRod.getRotate()+1);
-                    }
-                }
-                
-            }
+ 
 
             //  Dette er en hjelpeknapp som printer ut ulike ting som kan brukes til debugging.
-            if (e.getCode() == KeyCode.I){
-                // System.out.println(dupp.localToScene(dupp.getBoundsInLocal()).getMaxY());
-                System.out.println("BoatX: "+boat.getX());
-                System.out.println("RodX: "+fishingrod.getX());
-                System.out.println(variables.getHighscoreList());
-                System.out.println(duppMove + " " + dupp.getDuppMove());
-            }
+            // else if (e.getCode() == KeyCode.I){
+            //     // System.out.println(dupp.localToScene(dupp.getBoundsInLocal()).getMaxY());
+            //     System.out.println("BoatX: "+boat.getX());
+            //     System.out.println("RodX: "+fishingrod.getX());
+            //     System.out.println(variables.getHighscoreList());
+            //     System.out.println(duppMove + " " + dupp.getDuppMove());
+            // }
 
             if (e.getCode() == KeyCode.O){
                try {
@@ -302,7 +275,6 @@ public class CanvasController implements Initializable {
             if (e.getCode() == REEL_IN){
                 if (dupp.getDuppMove() == false){
                     timerMain.stopDuppTimer();
-
                     timerMain.startReelInnTimer(anchorPane, dupp, boat, line, fishingrod, dest_x, dest_y, variables);
                 }
             }
