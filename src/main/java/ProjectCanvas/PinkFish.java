@@ -3,7 +3,6 @@ package ProjectCanvas;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
-
 public class PinkFish extends Fish{
 
     private Image pinkFish = new Image(getClass().getResourceAsStream("res/pinkFish.png"));

@@ -2,7 +2,6 @@ package ProjectCanvas;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class BlueFish extends Fish{
 
@@ -12,7 +11,6 @@ public class BlueFish extends Fish{
         super(pos);
         super.setImageView(blueFish);
     }
-
     public double getPoint(){
         return ((this.getFish().getFitHeight()+this.getFish().getFitWidth()) * 0.01 + 1) * 300;
     }

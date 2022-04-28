@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
-
-import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -29,7 +27,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -204,7 +201,6 @@ public class CanvasController implements Initializable {
 
         //  En slik timer er forøvrig en type bakgrunnsprosess som gjør det mulig at flere ting skjer samtidig.
         timerMain.startFocusTimer(anchorPane, highscorePane);
-        Fish t = new Fish(new Point2D(3,2));
         // System.out.println(t.test().getPoint());
         for (int i = 0; i < 1; i++) {
 
@@ -219,7 +215,6 @@ public class CanvasController implements Initializable {
             if (j == 1) {
                 yellowFish = new YellowFish(new Point2D(100+i*2,510 + i*50));
                 variables.addToFishesList(yellowFish);
-      
                 anchorPane.getChildren().add(yellowFish.getFish());   
             }
             else if (j == 2) {
@@ -230,7 +225,6 @@ public class CanvasController implements Initializable {
             else{
                 pinkFish = new PinkFish(new Point2D(100+i*2,510 + i*50));
                 variables.addToFishesList(pinkFish);
-                // System.out.println(pinkFish.getPosX());
                 anchorPane.getChildren().add(pinkFish.getFish());   
             }
         }
@@ -355,13 +349,13 @@ public class CanvasController implements Initializable {
     //  skal vises på skjermen.
     @FXML
     private void handleButtonClick() {
-        System.out.println(22);
-        Stage stage = (Stage) background.getScene().getWindow();
+        // System.out.println(22);
+        // Stage stage = (Stage) background.getScene().getWindow();
 
-        System.out.println(background.getHvalue());
-        background.setHbarPolicy(ScrollBarPolicy.NEVER);
-        background.setVbarPolicy(ScrollBarPolicy.NEVER);
-        background.setHvalue(0.01); 
+        // System.out.println(background.getHvalue());
+        // background.setHbarPolicy(ScrollBarPolicy.NEVER);
+        // background.setVbarPolicy(ScrollBarPolicy.NEVER);
+        // background.setHvalue(0.01); 
         
     }
 

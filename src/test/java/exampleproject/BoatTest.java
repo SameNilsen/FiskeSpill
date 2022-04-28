@@ -1,15 +1,14 @@
 package exampleproject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+
+
 import org.junit.jupiter.api.Test;
 
 import ProjectCanvas.Boat;
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
+
 import javafx.scene.image.ImageView;
 
 public class BoatTest {
