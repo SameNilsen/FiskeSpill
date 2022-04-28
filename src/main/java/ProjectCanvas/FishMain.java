@@ -1,7 +1,5 @@
 package ProjectCanvas;
 
-import java.util.Random;
-
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollPane;
@@ -286,28 +284,9 @@ public class FishMain {
             {   
                 if (variables.getFishesList().size() < 15){
                     System.out.println("NEW FISH COMING");
-                    int j = new Random().nextInt(3) + 1;
 
-                    YellowFish yellowFish = null;
-                    BlueFish blueFish = null;
-                    PinkFish pinkFish = null;
-                    if (j == 1) {
-                        yellowFish = new YellowFish(new Point2D(100,700));
-                        variables.addToFishesList(yellowFish);
-            
-                        anchorPane.getChildren().add(yellowFish.getFish());   
-                    }
-                    else if (j == 2) {
-                        blueFish = new BlueFish(new Point2D(100,700));
-                        variables.addToFishesList(blueFish);
-                        anchorPane.getChildren().add(blueFish.getFish());   
-                    }
-                    else{
-                        pinkFish = new PinkFish(new Point2D(100,700));
-                        variables.addToFishesList(pinkFish);
-                        // System.out.println(pinkFish.getPosX());
-                        anchorPane.getChildren().add(pinkFish.getFish());   
-                    }
+                    Fish fish = new Fish(null);
+                    fish.generateFish(1, variables, anchorPane);
                 }
                 for (Fish fish : variables.getFishesList()) {
                     if ((Math.abs(dupp.getX()-fish.getPosX()) <= 100) && (Math.abs(dupp.getY()-fish.getPosY()) <= 100) && dupp.getDuppMove() == false && variables.getCaughtFiss() == null && fish.getPosY() > 550){
