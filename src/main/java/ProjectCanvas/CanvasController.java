@@ -26,6 +26,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -61,6 +62,9 @@ public class CanvasController implements Initializable {
     VBox highscorePane;
 
     @FXML
+    AnchorPane helpPane;
+
+    @FXML
     Button displayFissButton;
 
     @FXML
@@ -77,6 +81,9 @@ public class CanvasController implements Initializable {
 
     @FXML
     Button saveButton;
+
+    @FXML
+    Button helpButton;
 
     @FXML
     AnchorPane anchorPane;
@@ -164,6 +171,10 @@ public class CanvasController implements Initializable {
         Background bGround = new Background(bImg);
         anchorPane.setBackground(bGround);
 
+        Image helpIMG = new Image(getClass().getResourceAsStream("res/testTEST.png"));
+        ImageView hekpView = new ImageView(helpIMG);
+        helpPane.getChildren().add(hekpView);
+
         topBox.setStyle("-fx-background-color: #4FD1EB;");
         displayFisses.setStyle("-fx-background-color: #4FD1EB;");
         displayFissButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
@@ -172,7 +183,11 @@ public class CanvasController implements Initializable {
         startButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;"); //  SetDisable...
         highscoreButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
         saveButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
+        helpButton.setStyle("-fx-background-color: #4FD1EB;-fx-border-color:black;");
         highscorePane.setStyle("-fx-background-color: #FAE494;-fx-border-color:black;");
+        helpPane.setStyle("-fx-background-color: #FAE494;-fx-border-color:black;");
+
+        helpPane.setVisible(false);
 
         highscorePane.setVisible(false);
 
@@ -200,7 +215,7 @@ public class CanvasController implements Initializable {
         
 
         //  En slik timer er forøvrig en type bakgrunnsprosess som gjør det mulig at flere ting skjer samtidig.
-        timerMain.startFocusTimer(anchorPane, highscorePane);
+        timerMain.startFocusTimer(anchorPane, highscorePane, helpPane);
         // System.out.println(t.test().getPoint());
         for (int i = 0; i < 1; i++) {
 
@@ -422,6 +437,18 @@ public class CanvasController implements Initializable {
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         } 
+    }
+
+    @FXML
+    private void handleHelpButton() {
+        if (helpPane.isVisible()){
+            helpPane.setVisible(false);
+        }
+        else{
+            helpPane.setVisible(true);
+            background.setHvalue(0.4);
+            background.setVvalue(0.4);
+        }
     }
 
     //  Når man klikker i nedre høyre/venstre del av skjermen.

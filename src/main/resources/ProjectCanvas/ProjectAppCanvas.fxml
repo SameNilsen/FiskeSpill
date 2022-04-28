@@ -9,13 +9,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <VBox onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ProjectCanvas.CanvasController">
    <children>
-      <HBox fx:id="topBox" prefHeight="0.0" prefWidth="1477.0">
+      <HBox fx:id="topBox" opacity="0.8" prefHeight="0.0" prefWidth="1477.0">
          <children>
+            <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButton" text="Help">
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font>
+            </Button>
             <Button fx:id="highscoreButton" mnemonicParsing="false" onAction="#handleHigscoreButton" text="Highscore">
                <font>
                   <Font name="Bell MT" size="18.0" />
@@ -57,7 +63,7 @@
             <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
       </HBox>
-      <AnchorPane fx:id="displayFisses" prefHeight="42.0" prefWidth="1477.0" />
+      <AnchorPane fx:id="displayFisses" opacity="0.8" prefHeight="42.0" prefWidth="1477.0" />
       <ScrollPane fx:id="background" onMousePressed="#moveScreen" onMouseReleased="#stopScreen" prefWidth="1477.0">
          <content>
             <StackPane>
@@ -66,18 +72,123 @@
                      <children>
                         <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="315.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../java/ProjectCanvas/boat2.png" />
+                              <Image url="@../../java/ProjectCanvas/res/fishman.png" />
                            </image>
                         </ImageView>
-                        <VBox fx:id="highscorePane" layoutX="699.0" layoutY="319.0" maxHeight="216.0" maxWidth="100.0" prefHeight="216.0" prefWidth="100.0">
+                        <VBox fx:id="highscorePane" layoutX="699.0" layoutY="319.0" maxHeight="216.0" maxWidth="100.0" opacity="0.8" prefHeight="216.0" prefWidth="100.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore" textAlignment="CENTER" wrappingWidth="101.7529296875">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore" textAlignment="CENTER" underline="true" wrappingWidth="101.7529296875">
                                  <font>
                                     <Font name="Bell MT" size="18.0" />
                                  </font>
                               </Text>
                            </children>
                         </VBox>
+                        <StackPane fx:id="helpPane1" layoutX="415.0" layoutY="25.0" opacity="0.8" prefHeight="249.0" prefWidth="200.0" visible="false">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Help" textAlignment="CENTER" underline="true" wrappingWidth="162.1041259765625" StackPane.alignment="TOP_CENTER">
+                                 <font>
+                                    <Font name="Bell MT" size="18.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </Text>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9aa6b1" height="38.0" stroke="BLACK" strokeType="INSIDE" width="38.0" StackPane.alignment="TOP_LEFT">
+                                 <StackPane.margin>
+                                    <Insets top="60.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9aa6b1" height="38.0" stroke="BLACK" strokeType="INSIDE" width="38.0" StackPane.alignment="TOP_LEFT">
+                                 <StackPane.margin>
+                                    <Insets top="20.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <Text stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" text="A" textAlignment="CENTER" wrappingWidth="36.666595458984375" StackPane.alignment="TOP_LEFT">
+                                 <font>
+                                    <Font name="Bell MT" size="20.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets top="30.0" />
+                                 </StackPane.margin>
+                              </Text>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9aa6b1" height="38.0" stroke="BLACK" strokeType="INSIDE" width="38.0" StackPane.alignment="TOP_LEFT">
+                                 <StackPane.margin>
+                                    <Insets top="100.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9aa6b1" height="38.0" stroke="BLACK" strokeType="INSIDE" width="38.0" StackPane.alignment="TOP_LEFT">
+                                 <StackPane.margin>
+                                    <Insets top="140.0" />
+                                 </StackPane.margin>
+                              </Rectangle>
+                              <Text stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" text="D" textAlignment="CENTER" wrappingWidth="36.666595458984375" StackPane.alignment="TOP_LEFT">
+                                 <font>
+                                    <Font name="Bell MT" size="20.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets top="70.0" />
+                                 </StackPane.margin>
+                              </Text>
+                              <Text stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" text="R" textAlignment="CENTER" wrappingWidth="36.666595458984375" StackPane.alignment="TOP_LEFT">
+                                 <font>
+                                    <Font name="Bell MT" size="20.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets top="110.0" />
+                                 </StackPane.margin>
+                              </Text>
+                              <Text stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" text="F" textAlignment="CENTER" wrappingWidth="36.666595458984375" StackPane.alignment="TOP_LEFT">
+                                 <font>
+                                    <Font name="Bell MT" size="20.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets top="150.0" />
+                                 </StackPane.margin>
+                              </Text>
+                              <Text stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" text="MOVE LEFT" wrappingWidth="135.0" StackPane.alignment="TOP_RIGHT">
+                                 <font>
+                                    <Font name="Bell MT" size="15.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets top="30.0" />
+                                 </StackPane.margin>
+                              </Text>
+                              <Text stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" text="MOVE RIGHT" wrappingWidth="135.0" StackPane.alignment="TOP_RIGHT">
+                                 <font>
+                                    <Font name="Bell MT" size="15.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets top="70.0" />
+                                 </StackPane.margin>
+                              </Text>
+                              <Text stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" text="THROW" wrappingWidth="135.0" StackPane.alignment="TOP_RIGHT">
+                                 <font>
+                                    <Font name="Bell MT" size="15.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets top="110.0" />
+                                 </StackPane.margin>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Catch as many fish as possible in 60 seconds!" textAlignment="CENTER" wrappingWidth="149.22528076171875" StackPane.alignment="BOTTOM_CENTER">
+                                 <font>
+                                    <Font name="Bell MT" size="16.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets bottom="10.0" />
+                                 </StackPane.margin>
+                              </Text>
+                              <Text stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" strokeWidth="0.0" text="REEL INN" wrappingWidth="135.0" StackPane.alignment="TOP_RIGHT">
+                                 <font>
+                                    <Font name="Bell MT" size="15.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets top="150.0" />
+                                 </StackPane.margin>
+                              </Text>
+                           </children>
+                        </StackPane>
+                        <AnchorPane fx:id="helpPane" layoutX="461.0" layoutY="327.0" opacity="0.8" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </AnchorPane>
                </children>

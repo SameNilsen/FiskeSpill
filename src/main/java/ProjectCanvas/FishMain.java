@@ -16,6 +16,7 @@ public class FishMain {
 
     AnchorPane anchorPane;
     VBox highscorePane;
+    AnchorPane helpPane;
     Dupp dupp;
     long startTime;
     Boat boat;
@@ -56,9 +57,11 @@ public class FishMain {
         {   
             anchorPane.requestFocus();
             highscorePane.toFront();
+            helpPane.toFront();
         }
     };
-    public void startFocusTimer(AnchorPane anchorPane, VBox highscorePane) {
+    public void startFocusTimer(AnchorPane anchorPane, VBox highscorePane, AnchorPane helpPane) {
+        this.helpPane = helpPane;
         this.highscorePane = highscorePane;
         this.anchorPane = anchorPane;
         focusTimer.start();

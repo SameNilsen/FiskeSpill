@@ -9,7 +9,7 @@ public final class Constants {
     // CANVAS
     public static final String TITLE = "FISHES";
     public static final String PROJECT_CANVAS = "ProjectAppCanvas.fxml";
-    public static final int WIDTH = 600;
+    public static final int WIDTH = 700;
     public static final int HEIGHT = 600;
 
     // KEYCODES

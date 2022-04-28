@@ -39,4 +39,11 @@ public class FishTest {
             assertNotEquals(fish2.getAngle(), a);
         }
     }
+
+    @Test
+    @DisplayName("Test riktig poeng")
+    public void testPoints() {
+        int expectedPoints = (int) ((1 + (fish.getFish().getFitWidth() + fish.getFish().getFitHeight())* 0.01) * 100);
+        assertEquals(fish.getPoint(), expectedPoints);
+    }
 }
