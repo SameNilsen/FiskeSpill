@@ -3,7 +3,7 @@ package ProjectCanvas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VariablesNshit {
+public class Variables {
 
     int score = 0;
     Fish caughtFiss = null;

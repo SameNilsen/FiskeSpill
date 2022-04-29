@@ -12,19 +12,11 @@ import javafx.scene.layout.AnchorPane;
 
 public class Fish {
 
-    //  I denne klassen lages fiskene. I første utkast hadde jeg Ellipses istedet for Image som
-    //  fiskene (for å teste ut funksjonalitet). 
-    //  Denne linjen i konstruktøren:
-    //     this.fish = new Ellipse(pos_x, pos_y, size_x, size_y);
-    //  var da den opprinnelige "fisken", før den ble byttet ut med Image.
+    //  I denne klassen lages fiskene.
 
     //  Forøvrig, ImageView er bilderammen mens Image er selve bildet. Bilde/Image må legges inni 
     //  bilderammen/ImageView. Deretter er det bilderammen/ImageView som blir flyttet på og som får
     //  en vinkel osv. 
-
-    //  Selve bevegelsen til en fisk er veldig primitiv inntil videre. Den får utdelt en vinkel når
-    //  den opprettes, og så følger den en lineær bane ut ifra den vinkelen. Senere bær vi legge på 
-    //  individuelle hastigheter, bilder til fiskene, bevegelser osv.
 
     private double endring_x;
     private double endring_y;
@@ -132,13 +124,11 @@ public class Fish {
             if (this.getPosX() < -3){
                 System.out.println("GÅ TIL HØYRE");
                 System.out.println(this.getFish().getX() + "Speed:"+ this.getSpeed());
-                // this.getFish().setX(100);
                 return 20;
             }
             if (this.getPosX() > 1503){
                 System.out.println("GÅ TIL VENSTRE");
                 System.out.println(this.getFish().getX() + "Speed:"+ this.getSpeed());
-                // this.getFish().setX(1400);
                 return -20;
             }
         }
@@ -153,13 +143,11 @@ public class Fish {
         if (this.getPosY() < 497){
             System.out.println("GÅ NED");
             System.out.println(this.getFish().getY() + "Speed:"+ this.getSpeed());
-            // this.getFish().setY(600);
             return 20;
         }
         if (this.getPosY() > 1003){
             System.out.println("GÅ OPP");
             System.out.println(this.getFish().getY() + "Speed:"+ this.getSpeed());
-            // this.getFish().setY(900);
             return -20;
         }
         endring_y = Math.sin(Math.toRadians(this.getAngle()))*speed;
@@ -170,7 +158,7 @@ public class Fish {
         this.imageView.setX(pos.getX());
         this.imageView.setY(pos.getY());
     }
-    public void generateFish(int numbersOfFish, VariablesNshit variables, AnchorPane anchorPane) {
+    public void generateFish(int numbersOfFish, Variables variables, AnchorPane anchorPane) {
         for (int i = 0; i < 1; i++) {
 
             // Fish fish2 = new Fish(new Point2D(100+i*2,510 + i*50), new Point2D(30, 10));

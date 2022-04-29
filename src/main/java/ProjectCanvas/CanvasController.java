@@ -25,7 +25,6 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -146,7 +145,7 @@ public class CanvasController implements Initializable {
 
     FishMain timerMain = new FishMain();
 
-    VariablesNshit variables = new VariablesNshit();
+    Variables variables = new Variables();
 
     private void initMain(Point2D mousePos) {
         main = new FishMain();
@@ -170,7 +169,7 @@ public class CanvasController implements Initializable {
         Background bGround = new Background(bImg);
         anchorPane.setBackground(bGround);
 
-        Image helpIMG = new Image(getClass().getResourceAsStream("res/testTEST.png"));
+        Image helpIMG = new Image(getClass().getResourceAsStream("res/help.png"));
         ImageView hekpView = new ImageView(helpIMG);
         helpPane.getChildren().add(hekpView);
 
@@ -226,19 +225,8 @@ public class CanvasController implements Initializable {
         topBox.getChildren().remove(movfissButton);
     }
 
-    //  DUPP TIMER BESKRIVELSE:
-    //  Dette er en timer som startes idet duppen forlater fiskestangen. Duppen følger en slags krumlinjet
-    //  bevegelse gitt av x = v*cos(alfa)*t og y = v*sin(alfa)*t - 1/2 * g * t^2
-    //  Denne utregningen burde vel egentlig gjøres i en annen klasse f.eks FishMain.java
-    //  De etterfølgende if-setningene er for å flytte skjermen mens duppen beveger seg. Når duppen 
-    //  når et bestemt sluttpunkt stoppes timeren med timerDupp.stop()
+        //  Når man trykker på en knapp på tastaturet kalles disse metodene. Flerparten av de starter en animasjons timer. 
 
-
-    
-    //  Denne metoden håndterer hva som skjer når en tast på tastaturet blir trykket. 
-    //  Jeg hadde opprinnelig lagt bevegelsen til båten direkte inni her, men valgte å flytte det
-    //  til en egen AnimationTimer. Dermed er det veldig rotete her, fordi jeg ikke fjernet
-    //  koden, jeg bare kommenterte den ut. 
     @FXML
     private void handleKeyPressed(KeyEvent keyEvent) {
         background.setOnKeyPressed((KeyEvent e) -> {
@@ -277,6 +265,8 @@ public class CanvasController implements Initializable {
             //     System.out.println(variables.getHighscoreList());
             //     System.out.println(duppMove + " " + dupp.getDuppMove());
             // }
+
+            //  For å lagre spillet manuelt uten en dedikert knapp i grafikken
 
             if (e.getCode() == KeyCode.O){
                try {
